@@ -7,6 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
         <!-- build:css(.tmp) styles/main.css -->
+        <link rel="stylesheet" href="styles/foundation.min.css">
         <link rel="stylesheet" href="styles/main.css">
         <!-- endbuild -->
         <!-- build:js scripts/vendor/modernizr.js -->
@@ -14,37 +15,139 @@
         <!-- endbuild -->
     </head>
     <body>
-        <!--[if lt IE 10]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
+      <!--[if lt IE 10]>
+          <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+      <![endif]-->
 
-
-        <div class="hero-unit">
-          <h1>'Allo, 'Allo!</h1>
-          <p>You now have</p>
-          <ul>
-            <li>HTML5 Boilerplate</li>
-            <li>jQuery</li>
-            <li>Backbone.js</li>
-            <li>Lodash.js</li>
-            <li>Modernizr</li>
-            <li>RequireJS</li>
+      <nav class="top-bar" data-topbar>
+        <ul class="title-area">
+           
+          <li class="name">
+            <h1>
+              <a href="#">
+                Roadshow
+              </a>
+            </h1>
+          </li>
+          <li class="toggle-topbar menu-icon"><a href="#"><span>menu</span></a></li>
+        </ul>
+     
+        <section class="top-bar-section">
+           
+          <ul class="right">
+            <li class="divider"></li>
+            <li class="has-dropdown">
+              <a href="#">Browse</a>
+              <ul class="dropdown">
+                <li><label>Section Name</label></li>
+                <li class="has-dropdown">
+                  <a href="#" class="">Has Dropdown, Level 1</a>
+                  <ul class="dropdown">
+                    <li><a href="#">Dropdown Options</a></li>
+                    <li><a href="#">Dropdown Options</a></li>
+                    <li><a href="#">Level 2</a></li>
+                    <li><a href="#">Subdropdown Option</a></li>
+                    <li><a href="#">Subdropdown Option</a></li>
+                    <li><a href="#">Subdropdown Option</a></li>
+                  </ul>
+                </li>
+                <li><a href="#">Dropdown Option</a></li>
+                <li><a href="#">Dropdown Option</a></li>
+                <li class="divider"></li>
+                <li><label>Section Name</label></li>
+                <li><a href="#">Dropdown Option</a></li>
+                <li><a href="#">Dropdown Option</a></li>
+                <li><a href="#">Dropdown Option</a></li>
+                <li class="divider"></li>
+                <li><a href="#">See all →</a></li>
+              </ul>
+            </li>
+            <li class="divider"></li>
+            <li><a href="#">My Auctions</a></li>
           </ul>
+        </section>
+      </nav>
+      <div class="row">
+        <div class="large-12 columns">
+          <div class="row">
+            <ul class="small-block-grid-1 medium-block-grid-2 large-block-grid-3">
+ 
+              <li>
+                <img src="http://placehold.it/1000x1000&text=Thumbnail">
+   
+                <div class="panel">
+                  <h5>Item Name</h5>
+                  <h6 class="subheader">$000.00</h6>
+                </div>
+              </li>
+   
+              <li>
+                <img src="http://placehold.it/500x500&text=Thumbnail">
+   
+                <div class="panel">
+                  <h5>Item Name</h5>
+                  <h6 class="subheader">$000.00</h6>
+                </div>
+              </li>
+   
+              <li>
+                <img src="http://placehold.it/500x500&text=Thumbnail">
+   
+                <div class="panel">
+                  <h5>Item Name</h5>
+                  <h6 class="subheader">$000.00</h6>
+                </div>
+              </li>
+   
+              <li>
+                <img src="http://placehold.it/500x500&text=Thumbnail">
+   
+                <div class="panel">
+                  <h5>Item Name</h5>
+                  <h6 class="subheader">$000.00</h6>
+                </div>
+              </li>
+   
+              <li>
+                <img src="http://placehold.it/500x500&text=Thumbnail">
+   
+                <div class="panel">
+                  <h5>Item Name</h5>
+                  <h6 class="subheader">$000.00</h6>
+                </div>
+              </li>
+   
+              <li>
+                <img src="http://placehold.it/500x500&text=Thumbnail">
+   
+                <div class="panel">
+                  <h5>Item Name</h5>
+                  <h6 class="subheader">$000.00</h6>
+                </div>
+              </li>
+
+            </ul>
+          </div>
         </div>
+     
+        <footer class="row">
+          <div class="large-12"><hr/>
+            <div class="row">
+              <div class="large-6 columns large-centered columns">
+                <a target="_blank" href="https://twitter.com/whatmariel">@whatmariel</a>
+                x <a target="_blank" href="https://twitter.com/iansuvak">@iansuvak</a>
+                x <a target="_blank" href="https://twitter.com/doichi_">@doichi_</a>
+                x <a target="_blank" href="https://twitter.com/masonperler">@masonperler</a>
+              </div>
+   
+            </div>
+          </div>
+        </footer>
 
-
-        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-        <script>
-            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-            e.src='//www.google-analytics.com/analytics.js';
-            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-            ga('create','UA-XXXXX-X');ga('send','pageview');
-        </script>
-
-        <!-- build:js scripts/main.js -->
-        <script data-main="scripts/main" src="bower_components/requirejs/require.js"></script>
-        <!-- endbuild -->
-</body>
+      <!-- build:js scripts/main.js -->
+      <script data-main="scripts/main" src="bower_components/requirejs/require.js"></script>
+      <script data-main="scripts/main" src="bower_components/jquery/dist/jquery.min.js"></script>
+      <script data-main="scripts/main" src="scripts/vendor/foundation.min.js"></script>
+      <!-- endbuild -->
+  </body>
 </html>
