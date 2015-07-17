@@ -2,8 +2,8 @@ node_modules
 dist
 test/temp
 .sass-cache
-app/public/bower_components
-app/public/node_modules
+app/bower_components
+app/node_modules
 .tmp
 .DS_STORE
 app/.npm-debug.log
