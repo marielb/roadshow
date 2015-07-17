@@ -5,4 +5,5 @@ test/temp
 app/bower_components
 app/node_modules
 .tmp
+app/.npm-debug.log
 
