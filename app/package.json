@@ -15,7 +15,6 @@
     "serve-favicon": "~2.3.0",
     "pg": "~4.4.0",
     "mustachex": "~0.0.3",
-    "mustachex": "~2.1.2",
     "node-uuid": "~1.4.3"
   }
 }

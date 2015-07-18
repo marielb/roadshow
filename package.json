@@ -25,7 +25,8 @@
     "load-grunt-tasks": "^0.6.0",
     "connect-livereload": "^0.4.0",
     "time-grunt": "^1.0.0",
-    "jshint-stylish": "^1.0.0"
+    "jshint-stylish": "^1.0.0",
+    "mustachex@": "*"
   },
   "engines": {
     "node": ">=0.10.0"
