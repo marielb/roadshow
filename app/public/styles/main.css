@@ -9,3 +9,7 @@ a {
 .centered {
 	text-align: center;
 }
+
+.margin-bottom {
+	margin-bottom: 20px;
+}
