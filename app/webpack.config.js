@@ -1,9 +1,12 @@
 var path = require('path');
 
 module.exports = {
-  entry: './public/js/app',
+  entry: {
+    index: './public/js/index',
+    create_auction: './public/js/create_auction',
+  },
   output: {
-    filename: './public/js/app.min.js'
+    filename: './public/js/[name].min.js'
   },
   resolve: {
     alias: {
