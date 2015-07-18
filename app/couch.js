@@ -64,3 +64,11 @@ exports.all = function(db, options, done) {
   });
 };
 
+exports.id = function(db, id, done) {
+  request.get(url + '/' + db + '/' + id,
+      {json: true}, function(err, res, body) {
+    if (err) return done('Unable to connect to CouchDB');
+    done(null, body);
+  });
+};
+

@@ -12,16 +12,8 @@ router.get('/', function(req, res, next) {
 
 /* Open a page to create a new auction */
 router.get('/id/:id', function(req, res, next) {
-  couch.all('auction', {}, function(err, data) {
-    var auction = null;
-    for (var i in data.rows) {
-      if (data.rows[i].id === req.params.id) {
-        auction = data.rows[i];
-        break;
-      }
-    }
-    console.log(auction.doc);
-    res.render('auction', {auction: auction.doc});
+  couch.id('auction', req.params.id, function(err, data) {
+    res.render('auction', {auction: data});
   });
 });
 
