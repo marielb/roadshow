@@ -12,18 +12,23 @@ var auction = require('./routes/auction');
 //Load Mustache Template Engine
 var mustachex = require('mustachex');
 
+var multer = require('multer');
+
 var app = express();
 
 //Set Global App Settings
 app.engine('html', mustachex.express);
+
+app.use(multer({
+    dest: __dirname + '/public/images'
+}));
+
 app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'html');
 app.set('views', __dirname + '/views');
 
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 

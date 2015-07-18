@@ -40,27 +40,41 @@
       </div>
       <div class="row">
         <div class="large-12 columns">
-          <form>
+          <form action="/auction" method="post" enctype="multipart/form-data">
             Take a Photo
-            <input type="file" accept="image/*;capture=camera">
+            <input type="file" name="item_photo" accept="image/*;capture=camera">
             Item Name
             <input type="text" placeholder="TV Stand" required="required">
             Starting Bid
-            <input type="number" placeholder="10" required="required">
+            <div class="row collapse">
+              <div class="small-1 columns">
+                <span class="prefix">$</span>
+              </div>
+              <div class="small-11 columns">
+                <input type="number" min="1" class="medium-11 columns"  placeholder="10" required="required">
+              </div>
+            </div>
             Increments
-            <input type="number" placeholder="5" required="required">
+            <div class="row collapse">
+              <div class="small-1 columns">
+                <span class="prefix">$</span>
+              </div>
+              <div class="small-11 columns">
+                <input type="number" min="1" class="medium-11 columns"  placeholder="5" required="required">
+              </div>
+            </div>
             End date <input type="date" required="required">
-            <input type="submit" class="button postfix" value="Submit">
+            <input type="submit" class="button postfix" value="Start Auction">
           </form>
         </div>
       </div>
 
       <footer class="row margin-bottom">
         <div class="large-12 columns centered"><hr/>
-          <a target="_blank" href="https://twitter.com/whatmariel">@whatmariel</a>
-          x <a target="_blank" href="https://twitter.com/iansuvak">@iansuvak</a>
-          x <a target="_blank" href="https://twitter.com/doichi_">@doichi_</a>
-          x <a target="_blank" href="https://twitter.com/masonperler">@masonperler</a>
+          <a target="_top" href="mailto:mbartolome@wayfair.com">@mbartolome</a>
+          x <a target="_top" href="mailto:isuvak@wayfair.com">@isuvak</a>
+          x <a target="_top" href="mailto:ddenchev@wayfair.com">@ddenchev</a>
+          x <a target="_top" href="mailto:mperler@wayfair.com">@mperler</a>
         </div>
       </footer>
 
