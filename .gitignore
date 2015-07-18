@@ -6,4 +6,4 @@ app/public/bower_components
 app/node_modules
 .tmp
 .DS_STORE
-app/.npm-debug.log
+app/npm-debug.log

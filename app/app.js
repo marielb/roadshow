@@ -11,8 +11,11 @@ var users = require('./routes/users');
 //Load Mustache Template Engine
 var mustachex = require('mustachex');
 
-var app = express();
+var livereload = require('livereload');
+var reloadServer = livereload.createServer();
+reloadServer.watch(__dirname);
 
+var app = express();
 
 //Set Global App Settings
 app.engine('html', mustachex.express);
