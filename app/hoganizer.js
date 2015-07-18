@@ -2,7 +2,7 @@ var Hoganizer = require('hoganizer');
 var hoganizer = new Hoganizer({
     templateDir: './templates',
     extension: '.html',
-    writeLocation: './public/tmp/templates.js'
+    writeLocation: './app/tmp/templates.js'
 });
 
 // Compile all mustache templates in `./templates` and write
