@@ -18,14 +18,14 @@ var multer = require('multer');
 var app = express();
 
 //Set Global App Settings
-app.engine('html', mustachex.express);
+app.engine('mustache', mustachex.express);
 
 app.use(multer({
     dest: __dirname + '/public/images'
 }));
 
 app.use(express.static(__dirname + '/public'));
-app.set('view engine', 'html');
+app.set('view engine', 'mustache');
 app.set('views', __dirname + '/templates');
 
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
