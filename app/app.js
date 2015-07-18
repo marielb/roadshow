@@ -26,7 +26,7 @@ app.use(multer({
 
 app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'html');
-app.set('views', __dirname + '/public/templates');
+app.set('views', __dirname + '/templates');
 
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
