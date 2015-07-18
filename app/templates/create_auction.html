@@ -1,11 +1,10 @@
 {{> _header}}
 
-<div class="row">`
+<div class="row">
   <div class="large-12 columns">
     <form action="/auction" method="POST" enctype="multipart/form-data">
       Take a Photo
       <input type="file" name="item_photo" accept="image/*" capture="camera">   
-      <img class="resize-image" src="images/dragon_egg.jpg" alt="Image" />
       Item Name
       <input type="text" placeholder="TV Stand" required="required" name="auction_name">
       Starting Bid
@@ -26,6 +25,8 @@
           <input type="number" min="1" class="medium-11 columns" required="required" placeholder="5" name="step">
         </div>
       </div>
+      Email
+      <input type="email" placeholder="your@email.com" required="required" name="user_email">
       End date <input type="time" name="end_date">
       <input type="submit" class="button postfix" value="Start Auction">
     </form>

@@ -4,13 +4,14 @@ var fs = require('fs');
 //var auctionModel = require('../models/auction.js');
 var couch = require('../couch.js');
 var uuid = require('node-uuid');
+var userModel = require('../models/user.js');
 
 /* Open a page to create a new auction */
 router.get('/', function(req, res, next) {
   res.render('create_auction', {});
 });
 
-/* Open a page to create a new auction */
+/* Open a page to view an auction */
 router.get('/id/:id', function(req, res, next) {
   couch.id('auction', req.params.id, function(err, data) {
     res.render('auction', {auction: data});
@@ -29,9 +30,12 @@ router.put('/id/:id', function(req, res, next) {
 
 /* Send the data to create a new auction*/
 router.post('/', function(req, res, next) {
-  // Image upload to /public/images
+  userModel.login(req.cookies.user_id, req.body.user_email);
+  res.cookie('user_id', userModel._id);
+
   var auctionModel = {};
   auctionModel._id = uuid.v4();
+  auctionModel.auctioneer_id = userModel._id;
   auctionModel.auction_name = req.body.auction_name;
   auctionModel.end_time = req.body.end_time;
   auctionModel.start_bid = req.body.start_bid;

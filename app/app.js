@@ -30,7 +30,7 @@ app.set('views', __dirname + '/templates');
 
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
-app.use(cookieParser());
+app.use(cookieParser('partypooper'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
@@ -51,10 +51,11 @@ app.use(function(req, res, next) {
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     console.log(err);
+    console.log(err.stack);
     res.status(err.status || 500);
     res.render('error', {
       message: err.message,
-      error: err
+      error: err.stack
     });
   });
 }
