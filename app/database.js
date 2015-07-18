@@ -1,6 +1,6 @@
 var pg = require('pg');
 var uuid = require('node-uuid');
-var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/roadshow';
+var connectionString = 'postgres://postgres:postgres@localhost:5432/roadshow';
 
 var client = new pg.Client(connectionString);
 client.connect();
