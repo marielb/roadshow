@@ -9,9 +9,9 @@ router.get('/', function(req, res, next) {
 });
 
 /* Open a page to create a new auction */
-router.get('/:id', function(req, res, next) {
+router.get('/id/:id', function(req, res, next) {
   res.render('auction', {
-  	id: id
+  	id: req.params.id
   });
 });
 
