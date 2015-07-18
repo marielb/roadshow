@@ -8,11 +8,21 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
+//Load Mustache Template Engine
+var mustachex = require('mustachex');
+
 var app = express();
 
+
+//Set Global App Settings
+app.engine('html', mustachex.express);
+app.use(express.static(__dirname + '/public'));
+app.set('view engine', 'html');
+app.set('views', __dirname + '/views');
+
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'mustache');
+// app.set('view engine', 'mustache');
+// app.set('views', __dirname + '/views');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
