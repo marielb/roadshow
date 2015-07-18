@@ -10,7 +10,9 @@ router.get('/', function(req, res, next) {
 
 /* Open a page to create a new auction */
 router.get('/:id', function(req, res, next) {
-  res.render('auction', {});
+  res.render('auction', {
+  	id: id
+  });
 });
 
 /* Send the data to create a new auction*/
