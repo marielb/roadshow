@@ -22,6 +22,7 @@ router.get('/id/:id', function(req, res, next) {
     }
     console.log(auction.doc);
     res.render('auction', {auction: auction.doc});
+  });
 });
 
 /* Make a bid */
