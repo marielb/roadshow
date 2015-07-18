@@ -20,12 +20,7 @@ app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'html');
 app.set('views', __dirname + '/views');
 
-// view engine setup
-// app.set('view engine', 'mustache');
-// app.set('views', __dirname + '/views');
-
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
