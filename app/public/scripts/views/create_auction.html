@@ -44,14 +44,14 @@
             Take a Photo
             <input type="file" name="item_photo" accept="image/*;capture=camera">
             Item Name
-            <input type="text" placeholder="TV Stand" required="required">
+            <input type="text" placeholder="TV Stand" name="auction_name" required="required">
             Starting Bid
             <div class="row collapse">
               <div class="small-1 columns">
                 <span class="prefix">$</span>
               </div>
               <div class="small-11 columns">
-                <input type="number" min="1" class="medium-11 columns"  placeholder="10" required="required">
+                <input type="number" min="1" class="medium-11 columns" name="start_bid" placeholder="10" required="required">
               </div>
             </div>
             Increments
@@ -60,10 +60,10 @@
                 <span class="prefix">$</span>
               </div>
               <div class="small-11 columns">
-                <input type="number" min="1" class="medium-11 columns"  placeholder="5" required="required">
+                <input type="number" min="1" class="medium-11 columns" name="step" placeholder="5" required="required">
               </div>
             </div>
-            End date <input type="date" required="required">
+            End date <input type="date" name="end_time">
             <input type="submit" class="button postfix" value="Start Auction">
           </form>
         </div>
