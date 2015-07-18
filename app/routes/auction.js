@@ -14,8 +14,7 @@ router.post('/', function(req, res, next) {
   fs.readFile(req.files.item_photo.path, function (err, data) {
 	  var newPath = __dirname + "/images/";
 	  fs.writeFile(newPath, data, function (err) {
-		  res.render('create_auction', {
-		  });
+		  res.redirect('/');
 	  });
 	});
 });
