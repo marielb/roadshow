@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var auction = require('./routes/auction');
+var bid = require('./routes/auction');
 
 //Load Mustache Template Engine
 var mustachex = require('mustachex');
@@ -18,7 +19,7 @@ var app = express();
 app.engine('html', mustachex.express);
 app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'html');
-app.set('views', __dirname + '/views');
+app.set('views', __dirname + '/public/scripts/views');
 
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
