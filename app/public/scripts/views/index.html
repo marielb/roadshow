@@ -3,6 +3,9 @@
   <div class="large-12 columns">
     <div class="row">
       <ul class="small-block-grid-1 medium-block-grid-2 large-block-grid-3">
+        {{#auctions}}
+          {{> _auction_listing}}
+        {{/auctions}}
         <li>
           <img src="http://placehold.it/1000x1000&text=Thumbnail">
 

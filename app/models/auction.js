@@ -15,7 +15,14 @@ var auctionModel = {
             this.start_bid + ',' +
             this.step + ')';
     var query = client.query(sql);
-    query.on('end', function() { client.end(); });
+    query.on('end', function() {
+      console.log(this);
+      console.log(query);
+      client.end(); });
+  },
+  get: function(id) {
+    var sql = 'SELECT auction.id, image_path, auction_name, step, end_date, FROM auction ' +
+      'LEFT JOIN bids ON auction.id = bids.auction_id '
   }
 };
 
