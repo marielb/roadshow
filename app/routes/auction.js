@@ -26,12 +26,12 @@ router.get('/id/:id', function(req, res, next) {
 
 /* Make a bid */
 router.put('/id/:id', function(req, res, next) {
-  var auctionModel = couch.
-  auctionModel._id = req.body.id;
-  auctionModel._rev = req.body.rev;
-  auctionModel.current_bidder = req.body.user_id;
-  auctionModel.current_bid = req.current_bid + ;
-  res.render('auction', {id: req.params.id});
+  //var auctionModel = couch.
+  //auctionModel._id = req.body.id;
+  //auctionModel._rev = req.body.rev;
+  //auctionModel.current_bidder = req.body.user_id;
+  //auctionModel.current_bid = req.current_bid + ;
+  //res.render('auction', {id: req.params.id});
 });
 
 /* Send the data to create a new auction*/
