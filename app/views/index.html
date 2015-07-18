@@ -58,7 +58,7 @@
                       </div>
                     </div>
                     <div class="medium-4 small-12 columns">
-                      <a href="#" class="button expand">Bid</a>
+                      <a href="#" class="button expand" data-reveal-id="confirm-bid">Bid</a>
                     </div>
                   </div>
                 </div>
@@ -80,7 +80,7 @@
                       </div>
                     </div>
                     <div class="medium-4 small-12 columns">
-                      <a href="#" class="button expand">Bid</a>
+                      <a href="#" class="button expand" data-reveal-id="confirm-bid">Bid</a>
                     </div>
                   </div>
                 </div>
@@ -102,7 +102,7 @@
                       </div>
                     </div>
                     <div class="medium-4 small-12 columns">
-                      <a href="#" class="button expand">Bid</a>
+                      <a href="#" class="button expand" data-reveal-id="confirm-bid">Bid</a>
                     </div>
                   </div>
                 </div>
@@ -124,7 +124,7 @@
                       </div>
                     </div>
                     <div class="medium-4 small-12 columns">
-                      <a href="#" class="button expand">Bid</a>
+                      <a href="#" class="button expand" data-reveal-id="confirm-bid">Bid</a>
                     </div>
                   </div>
                 </div>
@@ -146,7 +146,7 @@
                       </div>
                     </div>
                     <div class="medium-4 small-12 columns">
-                      <a href="#" class="button expand">Bid</a>
+                      <a href="#" class="button expand" data-reveal-id="confirm-bid">Bid</a>
                     </div>
                   </div>
                 </div>
@@ -168,7 +168,7 @@
                       </div>
                     </div>
                     <div class="medium-4 small-12 columns">
-                      <a href="#" class="button expand">Bid</a>
+                      <a href="#" class="button expand" data-reveal-id="confirm-bid">Bid</a>
                     </div>
                   </div>
                 </div>
@@ -177,6 +177,12 @@
             </ul>
           </div>
         </div>
+      </div>
+
+      <div id="confirm-bid" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+        <h2 id="modalTitle">Bid $30 on Item Name?</h2>
+         <a href="#" class="button success">Confirm</a>
+        <a class="close-reveal-modal" aria-label="Close">&#215;</a>
       </div>
 
       <footer class="row margin-bottom">
@@ -191,6 +197,9 @@
       <!-- build:js scripts/main.js -->
       <script data-main="scripts/main" src="/bower_components/jquery/dist/jquery.min.js"></script>
       <script data-main="scripts/main" src="/scripts/vendor/foundation.min.js"></script>
+  <script>
+    $(document).foundation();
+  </script>
       <!-- endbuild -->
   </body>
 </html>
