@@ -1,5 +1,4 @@
 var path = require('path');
-console.log(path.join(__dirname, 'node_modules/tungstenjs/src/template/template'));
 module.exports = {
   entry: {
     index: './public/js/index',

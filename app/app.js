@@ -12,9 +12,7 @@ var bid = require('./routes/auction');
 
 //Load Mustache Template Engine
 var mustachex = require('mustachex');
-
 var multer = require('multer');
-
 var app = express();
 
 //Set Global App Settings
