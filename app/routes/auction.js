@@ -22,12 +22,21 @@ router.get('/id/:id', function(req, res, next) {
     }
     console.log(auction.doc);
     res.render('auction', {auction: auction.doc});
-  });
+});
+
+/* Make a bid */
+router.put('/id/:id', function(req, res, next) {
+  var auctionModel = couch.
+  auctionModel._id = req.body.id;
+  auctionModel._rev = req.body.rev;
+  auctionModel.current_bidder = req.body.user_id;
+  auctionModel.current_bid = req.current_bid + ;
+  res.render('auction', {id: req.params.id});
 });
 
 /* Send the data to create a new auction*/
 router.post('/', function(req, res, next) {
-	// Image upload to /public/images
+  // Image upload to /public/images
   var auctionModel = {};
   auctionModel._id = uuid.v4();
   auctionModel.auction_name = req.body.auction_name;
@@ -39,13 +48,12 @@ router.post('/', function(req, res, next) {
     console.log(err);
     console.log(data);
   });
-  console.log(auctionModel);
   fs.readFile(req.files.item_photo.path, function (err, data) {
-	  var newPath = __dirname + "/images/";
-	  fs.writeFile(newPath, data, function (err) {
-		  res.redirect('/');
-	  });
-	});
+    var newPath = __dirname + "/images/";
+    fs.writeFile(newPath, data, function (err) {
+      res.redirect('/');
+    });
+  });
 });
 
 module.exports = router;
