@@ -4,8 +4,12 @@ var fs = require('fs');
 
 /* Open a page to create a new auction */
 router.get('/', function(req, res, next) {
-  res.render('create_auction', {
-  });
+  res.render('create_auction', {});
+});
+
+/* Open a page to create a new auction */
+router.get('/:id', function(req, res, next) {
+  res.render('auction', {});
 });
 
 /* Send the data to create a new auction*/
