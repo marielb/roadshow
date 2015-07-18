@@ -4,7 +4,7 @@
   <div class="large-12 columns">
     <form action="/auction" method="POST" enctype="multipart/form-data">
       Take a Photo
-      <input type="file" name="item_photo" accept="image/*" capture="camera">   
+      <input type="file" name="item_photo" accept="image/*" capture="camera">
       Item Name
       <input type="text" placeholder="TV Stand" required="required" name="auction_name">
       Starting Bid
@@ -33,4 +33,5 @@
   </div>
 </div>
 
+<script data-main="scripts/main" src="/js/create_auction.min.js"></script>
 {{> _footer}}

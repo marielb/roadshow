@@ -19,13 +19,23 @@ router.get('/id/:id', function(req, res, next) {
 });
 
 /* Make a bid */
-router.put('/id/:id', function(req, res, next) {
-  //var auctionModel = couch.
-  //auctionModel._id = req.body.id;
-  //auctionModel._rev = req.body.rev;
-  //auctionModel.current_bidder = req.body.user_id;
-  //auctionModel.current_bid = req.current_bid + ;
-  //res.render('auction', {id: req.params.id});
+router.post('/id/:id', function(req, res, next) {
+  // Fetch the record from the DB before updating it
+ couch.id('auction', req.params.id, function(err, data) {
+   console.log(req);
+   data._rev = req.body.rev;
+   data.current_bidder = req.body.user_id;
+   data.current_bid = data.current_bid ? parseInt(data.current_bid) + parseInt(data.step) : data.start_bid;
+   data.bid_count += 1;
+   console.log(data);
+   couch.save('auction', data, function(err, doc) {
+     if (err) {
+       console.log('WAAHHH');
+       console.log(err);
+     }
+     res.render('auction', {auction: data});
+   })
+  });
 });
 
 /* Send the data to create a new auction*/
@@ -41,6 +51,7 @@ router.post('/', function(req, res, next) {
   auctionModel.start_bid = req.body.start_bid;
   auctionModel.step = req.body.step;
   auctionModel.image_path = req.files.item_photo.name;
+  auctionModel.bid_count = 0;
   couch.save('auction', auctionModel, function(err, data) {
     console.log(err);
     console.log(data);

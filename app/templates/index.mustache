@@ -1,10 +1,10 @@
-{{> _header}}
+{{> partials/_header}}
 <div class="row">
   <div class="large-12 columns">
     <div class="row">
       <ul class="small-block-grid-1 medium-block-grid-2 large-block-grid-3">
         {{#auctions}}
-          {{> _auction_listing}}
+          {{> partials/_auction_listing}}
         {{/auctions}}
       </ul>
     </div>
@@ -16,4 +16,6 @@
    <a href="#" class="button success">Confirm</a>
   <a class="close-reveal-modal" aria-label="Close">&#215;</a>
 </div>
-{{> _footer}}
+
+<script data-main="scripts/main" src="/js/index.min.js"></script>
+{{> partials/_footer}}
