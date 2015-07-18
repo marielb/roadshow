@@ -4,7 +4,8 @@ test/temp
 .sass-cache
 app/public/bower_components
 app/node_modules
-.tmp
+*.tmp
+*.swp
 .DS_STORE
 app/npm-debug.log
 app/public/images
