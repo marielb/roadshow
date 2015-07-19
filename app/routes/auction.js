@@ -10,7 +10,8 @@ var schedule = require('node-schedule');
 /* Open a page to create a new auction */
 router.get('/', function(req, res, next) {
   res.render('create_auction', {
-    auction: {},
+    auction: {
+    },
     data: JSON.stringify({
       auction: {image_name: 'test'}
     })
