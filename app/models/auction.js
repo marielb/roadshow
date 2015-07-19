@@ -96,6 +96,20 @@ var auctionModel = {
     var minute = parseInt(endTimeString.slice(3,5));
     var x = new Date();
     return new Date(x.getFullYear(), x.getMonth(), (((x.getHours()<=hour&&x.getMinutes()<minute)||x.getHours()<hour)?x.getDate():x.getDate()+1), hour, minute);
+  },
+
+  // helper date function
+  // format TZ to human readable
+  formatDate: function(tz) {
+    var date = new Date(tz);
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0'+minutes : minutes;
+    var strTime = hours + ':' + minutes + ' ' + ampm;
+    return strTime;
   }
 };
 
