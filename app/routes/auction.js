@@ -14,12 +14,16 @@ router.get('/', function(req, res, next) {
 /* Open a page to view an auction */
 router.get('/id/:id', function(req, res, next) {
   couch.id('auction', req.params.id, function(err, data) {
-    res.render('auction', {auction: data});
+    res.render('auction', {
+      auction: data,
+      clientData: JSON.stringify(data)
+    });
   });
 });
 
 /* Make a bid */
 router.post('/id/:id', function(req, res, next) {
+
  // Fetch the record from the DB before updating it
  couch.id('auction', req.params.id, function(err, data) {
    userModel.login(req.cookies.user_id, req.body.user_email);
@@ -64,6 +68,8 @@ router.post('/', function(req, res, next) {
       res.redirect('/');
     });
   });
+
+
 });
 
 module.exports = router;
