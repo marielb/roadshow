@@ -8,7 +8,7 @@
           <div id="js-canvas-holder" class="canvas_holder_hidden">
             <canvas id="js-canvas" class="large-12 columns"> </canvas>
           </div>
-          <input class="js-item-photo-input" type="file" name="item_photo" accept="image/*" capture="camera">
+          <input class="js-item-photo-input" type="file" required="required" name="item_photo" accept="image/*" capture="camera">
 
           Item Name
           <input type="text" placeholder="TV Stand" required="required" name="auction_name">
@@ -33,7 +33,7 @@
           </div>
           Email
           <input type="email" placeholder="your@email.com" required="required" name="user_email">
-          End date <input type="time" name="end_date">
+          End date <input type="time" name="end_date" required="required">
           <input type="submit" class="button postfix" value="Start Auction">
         </form>
       </div>
