@@ -2,7 +2,6 @@ var couch = require('../couch.js');
 var userModel = require('../models/user.js');
 var uuid = require('node-uuid');
 var fs = require('fs');
-var path = require("path");
 var schedule = require('node-schedule');
 
 var auctionModel = {

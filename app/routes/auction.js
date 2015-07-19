@@ -5,9 +5,10 @@ var couch = require('../couch.js');
 var userModel = require('../models/user.js');
 var auctionModel = require('../models/auction.js');
 var multer = require('multer');
+var path = require('path');
 
 multerConfig = multer({
-    dest: __dirname + '/public/images'
+    dest: path.join(__dirname, '../', '/public/images')
 });
 
 /* Open a page to create a new auction */
