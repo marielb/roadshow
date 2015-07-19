@@ -33,25 +33,11 @@ var auctionModel = {
   save: function(callback) {
     var self = this;
     couch.save('auction', this.toJSON(), function(err, data) {
-      if (!err) {
-        schedule.scheduleJob(self.end_date, function(model_id) {
-          couch.id('auction', model_id, function(err, data) {
-            data.closed = true;
-            console.log('Triggered!');
-            couch.save('auction', data, function(err) {
-              if (err) {
-                return false;
-                console.log('Auction expired but failed to close. We done messed up');
-              } else {
-                console.log('GREAT SUCCESS!!');
-              }
-            });
-          });
-        }.bind(null, data._id));
-      } else {
+      if (err) {
         return false
       }
       callback();
+      return true;
     });
   },
 

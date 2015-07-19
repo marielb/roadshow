@@ -35,7 +35,7 @@ router.get('/login', function(req, res, next) {
   		}
   	}
   	if (user_id) {
-  		res.redirect('/email?_id=' + user_id + '&email=' + email);
+  		res.redirect('/email?_id=' + user_id + '&email=' + email + '&template=login_email');
   	} else {
   		res.render('login', { message: { text: "Account not found. Post a bid or auction to get started!" }})
   	}

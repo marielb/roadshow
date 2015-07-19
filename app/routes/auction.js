@@ -77,8 +77,26 @@ router.post('/', multerConfig, function(req, res, next) {
   auctionData.image_path = req.files.item_photo.name;
   auctionModel.create(auctionData);
   auctionModel.save(function() {
+    schedule.scheduleJob(self.end_date, function(model_id) {
+      couch.id('auction', model_id, function(err, data) {
+        data.closed = true;
+        console.log('Triggered!');
+        couch.save('auction', data, function(err) {
+          if (err) {
+            return false;
+            console.log('Auction expired but failed to close. We done messed up');
+          } else {
+            console.log('GREAT SUCCESS!!');
+          }
+        });
+      });
+    }.bind(null, data._id));
     res.redirect('/');
   });
 });
+
+function closeAuction() {
+
+}
 
 module.exports = router;

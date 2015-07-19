@@ -11,6 +11,7 @@ var users = require('./routes/users');
 var auction = require('./routes/auction');
 var bid = require('./routes/auction');
 var search = require('./routes/search');
+var email = require('./routes/email');
 
 //Load Mustache Template Engine
 var mustachex = require('mustachex');
@@ -29,15 +30,11 @@ app.use(logger('dev'));
 app.use(cookieParser('partypoopah'));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(function(req, res, next){
-  res.locals.logged_in = !!req.cookies.user_id;
-  next();
-});
-
 app.use('/', routes);
 app.use('/users', users);
 app.use('/auction', auction);
 app.use('/search', search);
+app.use('/email', email);
 
 mailer.extend(app, {
   from: 'roadshowapp@gmail.com',
@@ -49,21 +46,6 @@ mailer.extend(app, {
     user: 'roadshowapp@gmail.com',
     pass: fs.readFileSync(__dirname + '/password','utf8')
   }
-});
-
-app.get('/email', function(req, res, next) {
-  app.mailer.send('login_email', {
-    to: req.query.email,  
-    subject: 'Roadshow Login',
-    _id: req.query._id
-  }, function (err) {
-    if (err) {
-      console.log(err);
-      res.send('There was an error sending the email');
-      return;
-    }
-  });
-  res.redirect('/');
 });
 
 // catch 404 and forward to error handler
