@@ -3,6 +3,7 @@ module.exports = {
   entry: {
     index: './public/js/index',
     create_auction: './public/js/create_auction',
+    auction_detail: './public/js/auction_detail',
   },
   output: {
     filename: './public/js/[name].min.js'

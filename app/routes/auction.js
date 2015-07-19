@@ -51,6 +51,7 @@ router.post('/id/:id', function(req, res, next) {
             if (err) {
               res.render('error', {message: err});
             } else {
+              data.winning = true;
               res.render('auction', {auction: data});
             }
           }
@@ -60,7 +61,7 @@ router.post('/id/:id', function(req, res, next) {
   );
 });
 
-/* Send the data to create a new auction */
+/* Create new auction */
 router.post('/', function(req, res, next) {
   userModel.login(req.cookies.user_id);
   res.cookie('user_id', userModel._id);
@@ -84,7 +85,7 @@ router.post('/', function(req, res, next) {
           console.log('Triggered!');
           couch.save('auction', data, function(err) {
             if (err) {
-              console.log('Auction expired but failed to closed. We done messed up');
+              console.log('Auction expired but failed to close. We done messed up');
             } else {
               console.log('GREAT SUCCESS!!');
             }

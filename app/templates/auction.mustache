@@ -7,7 +7,7 @@
 	</div>
   <div class="medium-6 columns">
   	<div data-alert class="alert-box warning round">
-		  This auction ends at {{end_date}} (24H)
+		  This auction ends at {{formatted_end_date}} (24H)
 		  <a href="#" class="close">&times;</a>
 		</div>
     {{#winning}}
@@ -36,4 +36,5 @@
 	</div>
 </div>
 {{/auction}}
+<script data-main="scripts/main" src="/js/auction_detail.min.js"></script>
 {{> partials/_footer}}
