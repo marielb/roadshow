@@ -9,14 +9,12 @@ router.get('/', function(req, res, next) {
   	var rows = [];
   	_.each(data.rows, function(auction) {
   		// TODO: if err
-  		console.log(auction.doc);
   		if (!auction.doc.closed) {
   			rows.push(auction);
-  		} else {
-  			console.log(auction);
   		}
   	});
-    res.render('index', {auctions: rows});
+  	// !! is essentially a cast to bool. any non empty is true 
+    res.render('index', {auctions: rows, logged_in: !!req.cookies.user_id});
   })
 });
 
