@@ -1,21 +1,25 @@
 {{> partials/_header}}
 
+{{#error_message}}
+	{{> partials/_error}}
+{{/error_message}}
+
 {{#auction}}
 <div class="row">
-  <div class="medium-6 columns">
-	  <img src="/images/{{image_path}}">
+	<div data-alert class="alert-box warning radius">
+	  	This auction ends at {{formatted_end_date}} (24H)
+	  	<a href="#" class="close">&times;</a>
 	</div>
-  <div class="medium-6 columns">
-  	<div data-alert class="alert-box warning round">
-		  This auction ends at {{formatted_end_date}} (24H)
-		  <a href="#" class="close">&times;</a>
-		</div>
     {{#winning}}
-  	<div data-alert class="alert-box success round">
+  	<div data-alert class="alert-box success radius">
       You are currently winning this auction!
 		  <a href="#" class="close">&times;</a>
 		</div>
     {{/winning}}
+  	<div class="medium-6 columns">
+	  <img src="/images/{{image_path}}">
+	</div>
+  	<div class="medium-6 columns">
 		<div class="panel">
 	    <div class="row collapse">
 	      <div class="medium-8 small-12 columns">

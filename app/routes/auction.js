@@ -4,6 +4,11 @@ var router = express.Router();
 var couch = require('../couch.js');
 var userModel = require('../models/user.js');
 var auctionModel = require('../models/auction.js');
+var multer = require('multer');
+
+multerConfig = multer({
+    dest: __dirname + '/public/images'
+});
 
 /* Open a page to create a new auction */
 router.get('/', function(req, res, next) {
@@ -61,7 +66,7 @@ router.post('/:id', function(req, res, next) {
 });
 
 /* Create new auction */
-router.post('/', function(req, res, next) {
+router.post('/', multerConfig, function(req, res, next) {
   userModel.login(req.cookies.user_id);
   res.cookie('user_id', userModel._id);
 

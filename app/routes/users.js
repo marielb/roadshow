@@ -23,7 +23,7 @@ router.get('/', function(req, res, next) {
   }
 });
 
-/* Login page. */
+/* Log in a user. */
 router.get('/login', function(req, res, next) {
   var email = req.query.email;
   var user_id = null;
@@ -38,6 +38,11 @@ router.get('/login', function(req, res, next) {
   		res.redirect('/email?_id=' + user_id + '&email=' + email);
   	}
   });
+});
+
+router.get('/logout', function(req, res, next) {
+  res.clearCookie('user_id');
+  res.redirect('/');
 });
 
 /* Authenticate user */

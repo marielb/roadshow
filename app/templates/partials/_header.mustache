@@ -36,9 +36,23 @@
           <div class="large-12 columns">
             <form action="/search" method="GET">
               <div class="row collapse">
-                <div class="medium-12 small-4 fr text-right columns margin-bottom-sm">
-                  <div><a href="/users">My Account</a></div>
-                </div>
+                {{#logged_in}}
+                  <div class="medium-12 small-4 fr text-right margin-bottom-sm columns">
+                    <ul class="row inline-list fr">
+                      <li>
+                        <a href="/users">Profile</a>
+                      </li>
+                      <li>
+                        <a href="/users/logout"><img src="/images/logout_button.png"></a>
+                      </li>
+                    </ul>
+                  </div>
+                {{/logged_in}}
+                {{^logged_in}}
+                  <div class="medium-12 small-4 fr text-right columns margin-bottom-sm">
+                    <a href="/users"><img src="/images/power_button.png"></a>
+                  </div>
+                {{/logged_in}}
                 <div class="medium-3 small-8 columns">
                   <h3><a href="/">Roadshow/</a></h3>
                 </div>
