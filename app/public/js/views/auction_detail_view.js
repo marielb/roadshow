@@ -15,7 +15,6 @@ var AppView = View.extend({
   handleMakeBid: function(e) {
     console.log('Bid Made')
     console.log(this.model);
-    debugger;
     e.preventDefault();
     this.model.save({}, {
       wait: true,

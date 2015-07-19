@@ -15,11 +15,17 @@ var email = require('./routes/email');
 
 //Load Mustache Template Engine
 var mustachex = require('mustachex');
+var multer = require('multer');
 var mailer = require('express-mailer');
 var app = express();
+var bodyParser = require('body-parser');
 
 //Set Global App Settings
 app.engine('mustache', mustachex.express);
+
+app.use(multer({
+    dest: __dirname + '/public/images'
+}));
 
 app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'mustache');
@@ -29,6 +35,7 @@ app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(cookieParser('partypoopah'));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.json());
 
 app.use('/', routes);
 app.use('/users', users);

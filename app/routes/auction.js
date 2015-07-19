@@ -4,12 +4,6 @@ var router = express.Router();
 var couch = require('../couch.js');
 var userModel = require('../models/user.js');
 var auctionModel = require('../models/auction.js');
-var multer = require('multer');
-var path = require('path');
-
-multerConfig = multer({
-    dest: path.join(__dirname, '../', '/public/images')
-});
 
 /* Open a page to create a new auction */
 router.get('/', function(req, res, next) {
@@ -37,28 +31,27 @@ router.get('/:id', function(req, res, next) {
 });
 
 /* Make a bid */
-router.post('/:id', function(req, res, next) {
+router.put('/:id', function(req, res, next) {
   var user_id = req.cookies.user_id;
   auctionModel.validateBid(req.params.id, user_id,
     function(err, data) {
       if (err) {
         if (err.stack) {
-          res.render('error', {message: err.message, error: err.stack});
+          res.json({message: err.message, error: err.stack});
         } else {
-          res.render('error', {message: err});
+          res.json(err);
         }
       } else {
-        userModel.login(user_id, req.body.user_email);
+        userModel.login(user_id, '597ba6ee-768c-427d-ba81-bda5e0e2193a');
         res.cookie('user_id', userModel._id);
-        auctionModel.saveBid(data, req.body.rev, userModel._id,
+        auctionModel.saveBid(data, req.body._rev, userModel._id,
           function(err, data) {
             console.log(err);
             if (err) {
-              console.log(err.stack)
-              res.render('error', {message: err});
+              res.json(err);
             } else {
               data.winning = true;
-              res.render('auction', {auction: data});
+              res.json(data);
             }
           }
         );
@@ -68,8 +61,8 @@ router.post('/:id', function(req, res, next) {
 });
 
 /* Create new auction */
-router.post('/', multerConfig, function(req, res, next) {
-  userModel.login(req.cookies.user_id, req.body.user_email);
+router.post('/', function(req, res, next) {
+  userModel.login(req.cookies.user_id);
   res.cookie('user_id', userModel._id);
 
   var auctionData = req.body;
