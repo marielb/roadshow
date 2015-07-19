@@ -68,7 +68,7 @@ router.post('/:id', function(req, res, next) {
 
 /* Create new auction */
 router.post('/', multerConfig, function(req, res, next) {
-  userModel.login(req.cookies.user_id);
+  userModel.login(req.cookies.user_id, req.body.user_email);
   res.cookie('user_id', userModel._id);
 
   var auctionData = req.body;
