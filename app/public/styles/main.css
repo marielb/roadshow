@@ -24,11 +24,15 @@ a, h1, h2, h3, h4, h5, h6 {
 }
 
 .margin-bottom-sm {
-	margin-bottom: 5px;
+    margin-bottom: 5px;
 }
 
 .margin-none {
 	margin: 0;
+}
+
+.vertical-align {
+    margin-top: -2px;
 }
 
 .fr {
