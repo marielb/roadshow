@@ -21,6 +21,7 @@ router.get('/', function(req, res, next) {
 /* Open a page to view an auction */
 router.get('/id/:id', function(req, res, next) {
   couch.id('auction', req.params.id, function(err, data) {
+    data.winning = req.cookies.user_id == data.current_bidder
     res.render('auction', {
       auction: data,
       data: JSON.stringify({
