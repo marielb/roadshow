@@ -49,7 +49,7 @@ router.post('/', function(req, res, next) {
   auctionModel._id = uuid.v4();
   auctionModel.auctioneer_id = userModel._id;
   auctionModel.auction_name = req.body.auction_name;
-  auctionModel.end_time = req.body.end_time;
+  auctionModel.end_date = req.body.end_date;
   auctionModel.start_bid = req.body.start_bid;
   auctionModel.step = req.body.step;
   auctionModel.image_path = req.files.item_photo.name;
