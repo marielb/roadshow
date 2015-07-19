@@ -8,10 +8,17 @@ var userModel = {
   login: function(user_id, email) {
     this._id = user_id;
     this.email = email;
+
     if (!user_id) {
       this._id = uuid.v4();
       this.save();
-      return;
+    } else {
+      var self = this;
+      couch.id('user_account', user_id, function(err, data) {
+        if (!data._id) {
+          self.save();
+        }
+      });
     }
   },
   save: function() {

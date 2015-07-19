@@ -20,7 +20,7 @@ router.get('/id/:id', function(req, res, next) {
 
 /* Make a bid */
 router.post('/id/:id', function(req, res, next) {
-  // Fetch the record from the DB before updating it
+ // Fetch the record from the DB before updating it
  couch.id('auction', req.params.id, function(err, data) {
    userModel.login(req.cookies.user_id, req.body.user_email);
    res.cookie('user_id', userModel._id);
