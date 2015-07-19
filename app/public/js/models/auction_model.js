@@ -7,7 +7,7 @@ var TungstenBackboneBase = require('tungstenjs/adaptors/backbone');
 
 var Model = TungstenBackboneBase.Model;
 var AuctionModel = Model.extend({
-  initialize: function() {
+  postInitialize: function() {
     console.log('AuctionModel init');
   }
 });
