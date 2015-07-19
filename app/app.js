@@ -14,6 +14,7 @@ var search = require('./routes/search');
 //Load Mustache Template Engine
 var mustachex = require('mustachex');
 var multer = require('multer');
+var mailer = require('express-mailer');
 var app = express();
 
 //Set Global App Settings
@@ -29,13 +30,40 @@ app.set('views', __dirname + '/templates');
 
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
-app.use(cookieParser('partypooper'));
+app.use(cookieParser('partypoopah'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
 app.use('/auction', auction);
 app.use('/search', search);
+
+mailer.extend(app, {
+  from: 'roadshowapp@gmail.com',
+  host: 'smtp.gmail.com', // hostname 
+  secureConnection: true, // use SSL 
+  port: 465, // port for secure SMTP 
+  transportMethod: 'SMTP', // default is SMTP. Accepts anything that nodemailer accepts 
+  auth: {
+    user: 'roadshowapp@gmail.com',
+    pass: 'partypoopah'
+  }
+});
+
+app.get('/email', function(req, res, next) {
+  app.mailer.send('login_email', {
+    to: req.query.email,  
+    subject: 'Roadshow Login',
+    _id: req.query._id
+  }, function (err) {
+    if (err) {
+      console.log(err);
+      res.send('There was an error sending the email');
+      return;
+    }
+  });
+  res.redirect('/');
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
