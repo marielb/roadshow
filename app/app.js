@@ -14,16 +14,11 @@ var search = require('./routes/search');
 
 //Load Mustache Template Engine
 var mustachex = require('mustachex');
-var multer = require('multer');
 var mailer = require('express-mailer');
 var app = express();
 
 //Set Global App Settings
 app.engine('mustache', mustachex.express);
-
-app.use(multer({
-    dest: __dirname + '/public/images'
-}));
 
 app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'mustache');
