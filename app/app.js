@@ -29,6 +29,11 @@ app.use(logger('dev'));
 app.use(cookieParser('partypoopah'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(function(req, res, next){
+  res.locals.logged_in = !!req.cookies.user_id;
+  next();
+});
+
 app.use('/', routes);
 app.use('/users', users);
 app.use('/auction', auction);
@@ -58,7 +63,7 @@ app.get('/email', function(req, res, next) {
       return;
     }
   });
-  res.render('login', { message: { text: "A login link has been sent to your email." }});
+  res.redirect('/');
 });
 
 // catch 404 and forward to error handler

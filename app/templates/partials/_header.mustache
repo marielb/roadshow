@@ -37,18 +37,15 @@
             <form action="/search" method="GET">
               <div class="row collapse">
                 <div class="medium-12 small-5 fr text-right margin-bottom-sm columns">
-                {{#logged_in}}
-                    <ul class="row inline-list fr">
-                      <li>
-                        <a href="/users">Profile</a>
-                      </li>
-                      <li class="vertical-align">
-                        <a href="/users/logout"><img src="/images/logout_button.png"></a>
-                      </li>
-                    </ul>
-                {{/logged_in}}
-                {{^logged_in}}
-                  <a href="/users">Profile</a>
+                  <ul class="row inline-list fr">
+                    <li>
+                      <a href="/users">Profile</a>
+                    </li>
+                  {{#logged_in}}
+                    <li class="vertical-align">
+                      <a href="/users/logout"><img src="/images/logout_button.png"></a>
+                    </li>
+                  </ul>
                 {{/logged_in}}
                 </div>
                 <div class="medium-3 small-7 columns">
