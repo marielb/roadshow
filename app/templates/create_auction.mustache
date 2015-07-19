@@ -3,38 +3,73 @@
   {{#auction}}
     <div class="row js-new-auction">
       <div class="large-12 columns">
-        <form action="/auction" method="POST" enctype="multipart/form-data">
-          Take a Photo
-          <div id="js-canvas-holder" class="canvas_holder_hidden">
-            <canvas id="js-canvas" class="large-12 columns"> </canvas>
-          </div>
-          <input class="js-item-photo-input" type="file" required="required" name="item_photo" accept="image/*" capture="camera">
+        <form action="/auction" method="POST" enctype="multipart/form-data" id="new-auction-form">
+          {{^step_2}}
+            {{^step_3}}
+              Take a Photo
+              <input class="js-item-photo-input" type="file" name="item_photo" accept="image/*" capture="camera">
+            {{/step_3}}
+          {{/step_2}}
 
-          Item Name
-          <input type="text" placeholder="TV Stand" required="required" name="auction_name">
+          {{#step_2}}
+            {{#image}}
+              <div class="component">
+                <div class="overlay">
+                  <div class="overlay-inner">
+                  </div>
+                </div>
+                <div class="resize-container">
+                  <span class="resize-handle resize-handle-ne"></span>
+                  <span class="resize-handle resize-handle-nw"></span>
+                  <img id="js-resizable-image" class="js-resizable-image" src="{{image}}" title="{{{image_name}}}" />
+                  <span class="resize-handle resize-handle-se"></span>
+                  <span class="resize-handle resize-handle-sw"></span>
+                </div>
+                <br>
+                <a class="btn-crop js-crop">Crop <img class="icon-crop" src="../assets/crop.svg"></a>
+              </div>
+            {{/image}}
+          {{/step_2}}
 
-          Starting Bid
-          <div class="row collapse">
-            <div class="small-1 columns">
-              <span class="prefix">$</span>
+          {{#step_3}}
+            {{image_name}}
+            <img class="" src="{{resized_image}}" title="{{{image_name}}}" /><br>
+            <input type="text" class="hidden" value="{{resized_image}}" name="item_photo">
+
+            Item Name
+            <input type="text" placeholder="TV Stand" required="required" name="auction_name">
+
+            Starting Bid
+            <div class="row collapse">
+              <div class="small-1 columns">
+                <span class="prefix">$</span>
+              </div>
+              <div class="small-11 columns">
+                <input type="number" min="1" class="medium-11 columns"  placeholder="10" required="required" name="start_bid">
+              </div>
             </div>
-            <div class="small-11 columns">
-              <input type="number" min="1" class="medium-11 columns"  placeholder="10" required="required" name="start_bid">
+            Increments
+            <div class="row collapse">
+              <div class="small-1 columns">
+                <span class="prefix">$</span>
+              </div>
+              <div class="small-11 columns">
+                <input type="number" min="1" class="medium-11 columns" required="required" placeholder="5" name="step">
+              </div>
             </div>
-          </div>
-          Increments
-          <div class="row collapse">
-            <div class="small-1 columns">
-              <span class="prefix">$</span>
-            </div>
-            <div class="small-11 columns">
-              <input type="number" min="1" class="medium-11 columns" required="required" placeholder="5" name="step">
-            </div>
+<<<<<<< HEAD
           </div>
           Email
           <input type="email" placeholder="your@email.com" required="required" name="user_email">
           End date <input type="time" name="end_date" required="required">
           <input type="submit" class="button postfix" value="Start Auction">
+=======
+            Email
+            <input type="email" placeholder="your@email.com" required="required" name="user_email">
+            End date <input type="time" name="end_date">
+            <input type="submit" class="button postfix" value="Start Auction">
+          {{/step_3}}
+>>>>>>> resizable images
         </form>
       </div>
     </div>

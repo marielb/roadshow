@@ -1,8 +1,13 @@
 var express = require('express');
 var router = express.Router();
+<<<<<<< HEAD
 //var auctionModel = require('../models/auction.js');
+=======
+var fs = require('fs');
+>>>>>>> resizable images
 var couch = require('../couch.js');
 var userModel = require('../models/user.js');
+<<<<<<< HEAD
 var auctionModel = require('../models/auction.js');
 var multer = require('multer');
 var path = require('path');
@@ -10,6 +15,10 @@ var path = require('path');
 multerConfig = multer({
     dest: path.join(__dirname, '../', '/public/images')
 });
+=======
+var schedule = require('node-schedule');
+var path = require('path');
+>>>>>>> resizable images
 
 /* Open a page to create a new auction */
 router.get('/', function(req, res, next) {
@@ -71,26 +80,43 @@ router.post('/:id', function(req, res, next) {
 router.post('/', multerConfig, function(req, res, next) {
   userModel.login(req.cookies.user_id, req.body.user_email);
   res.cookie('user_id', userModel._id);
+  req.body.item_photo = req.body.item_photo.slice(22);
 
-  var auctionData = req.body;
-  auctionData.auctioneer_id = userModel._id;
-  auctionData.image_path = req.files.item_photo.name;
-  auctionModel.create(auctionData);
-  auctionModel.save(function() {
-    schedule.scheduleJob(self.end_date, function(model_id) {
-      couch.id('auction', model_id, function(err, data) {
-        data.closed = true;
-        console.log('Triggered!');
-        couch.save('auction', data, function(err) {
-          if (err) {
-            return false;
-            console.log('Auction expired but failed to close. We done messed up');
-          } else {
-            console.log('GREAT SUCCESS!!');
-          }
+  var photo = new Buffer(req.body.item_photo, 'base64');
+  var image_name = uuid.v4() + '.png';
+
+  var auctionModel = {};
+  var endTime = calculateEndDate(req.body.end_date);
+
+  auctionModel._id = uuid.v4();
+  auctionModel.auctioneer_id = userModel._id;
+  auctionModel.auction_name = req.body.auction_name;
+  auctionModel.end_date = endTime;
+  auctionModel.start_bid = req.body.start_bid;
+  auctionModel.step = req.body.step;
+
+  auctionModel.image_path = image_name;
+  auctionModel.bid_count = 0;
+  couch.save('auction', auctionModel, function(err, data) {
+    if (!err) {
+      schedule.scheduleJob(endTime, function(model_id) {
+        couch.id('auction', model_id, function(err, data) {
+          data.closed = true;
+          console.log('Triggered!');
+          couch.save('auction', data, function(err) {
+            if (err) {
+              console.log('Auction expired but failed to closed. We done messed up');
+            } else {
+              console.log('GREAT SUCCESS!!');
+            }
+          });
         });
-      });
-    }.bind(null, data._id));
+      }.bind(null, data._id));
+    }
+  });
+
+  var newPath = path.join(__dirname, '../public/images/' + image_name);
+  fs.writeFile(newPath, photo, function (err) {
     res.redirect('/');
   });
 });
