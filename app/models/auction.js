@@ -1,28 +1,38 @@
-var client = require('../conn.js');
+var couch = require('../couch.js');
+var userModel = require('../models/user.js');
 
 var auctionModel = {
-  auctioneer_id: 5,
-  start_bid: 10.99,
-  step: 0.51,
-  image_path: '',
-  auction_name: '',
-
-  save: function() {
-    var sql = 'INSERT INTO auction (auctioneer_id, auction_name, image_path, start_bid, step) VALUES ' +
-      '(' + this.auctioneer_id + ',' +
-            '\'' + this.auction_name + '\',' +
-            '\'' + this.image_path + '\',' +
-            this.start_bid + ',' +
-            this.step + ')';
-    var query = client.query(sql);
-    query.on('end', function() {
-      console.log(this);
-      console.log(query);
-      client.end(); });
+  validateBid: function(auction_id, user_id, callback) {
+    // Fetch the record from the DB before updating it
+    couch.id('auction', auction_id, function(err, data) {
+      if (err) {
+        callback(err);
+      } else if (user_id === data.auctioneer_id) {
+        callback('You are not allowed to participate in your own auction!');
+      } else if (new Date() > new Date(data.end_date)) {
+        callback('This auction has been closed!');
+      } else {
+        callback(null, data);
+      }
+    });
   },
-  get: function(id) {
-    var sql = 'SELECT auction.id, image_path, auction_name, step, end_date, FROM auction ' +
-      'LEFT JOIN bids ON auction.id = bids.auction_id '
+
+  saveBid: function(auction_data, revision, user_id, callback) {
+    auction_data._rev = revision;
+    auction_data.current_bidder = user_id;
+    auction_data.current_bid = 
+      auction_data.current_bid ? 
+        parseInt(auction_data.current_bid) + parseInt(auction_data.step) : 
+        auction_data.start_bid;
+    auction_data.bid_count += 1;
+    couch.save('auction', auction_data, function(err, doc) {
+      if (err) {
+        console.log('WAAHHH');
+        console.log(err);
+        callback(err)
+      }
+      callback(null, auction_data);
+    });
   }
 };
 

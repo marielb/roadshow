@@ -6,6 +6,7 @@ var couch = require('../couch.js');
 var uuid = require('node-uuid');
 var userModel = require('../models/user.js');
 var schedule = require('node-schedule');
+var auctionModel = require('../models/auction.js');
 
 /* Open a page to create a new auction */
 router.get('/', function(req, res, next) {
@@ -33,30 +34,35 @@ router.get('/id/:id', function(req, res, next) {
 
 /* Make a bid */
 router.post('/id/:id', function(req, res, next) {
-
- // Fetch the record from the DB before updating it
- couch.id('auction', req.params.id, function(err, data) {
-   userModel.login(req.cookies.user_id, req.body.user_email);
-   res.cookie('user_id', userModel._id);
-
-   data._rev = req.body.rev;
-   data.current_bidder = userModel._id;
-   data.current_bid = data.current_bid ? parseInt(data.current_bid) + parseInt(data.step) : data.start_bid;
-   data.bid_count += 1;
-   console.log(data);
-   couch.save('auction', data, function(err, doc) {
-     if (err) {
-       console.log('WAAHHH');
-       console.log(err);
-     }
-     res.render('auction', {auction: data});
-   })
-  });
+  var user_id = req.cookies.user_id;
+  auctionModel.validateBid(req.params.id, user_id,
+    function(err, data) {
+      if (err) {
+        if (err.stack) {
+          res.render('error', {message: err.message, error: err.stack});
+        } else {
+          res.render('error', {message: err});
+        }
+      } else {
+        userModel.login(user_id, req.body.user_email);
+        res.cookie('user_id', userModel._id);
+        auctionModel.saveBid(data, req.body.rev, userModel._id,
+          function(err, data) {
+            if (err) {
+              res.render('error', {message: err});
+            } else {
+              res.render('auction', {auction: data});
+            }
+          }
+        );
+      }
+    }
+  );
 });
 
-/* Send the data to create a new auction*/
+/* Send the data to create a new auction */
 router.post('/', function(req, res, next) {
-  userModel.login(req.cookies.user_id, req.body.user_email);
+  userModel.login(req.cookies.user_id);
   res.cookie('user_id', userModel._id);
 
   var auctionModel = {};
