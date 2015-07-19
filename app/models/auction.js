@@ -10,6 +10,7 @@ var auctionModel = {
     this._id = uuid.v4();
     this.auctioneer_id = prop.auctioneer_id;
     this.auction_name = prop.auction_name;
+    this.date_created = new Date();
     this.end_date = this.calculateEndDate(prop.end_date);
     this.start_bid = prop.start_bid;
     this.step = prop.step;
@@ -22,7 +23,8 @@ var auctionModel = {
       _id: this._id,
       auctioneer_id: this.auctioneer_id,
       auction_name: this.auction_name,
-      end_date: this.end_date.toString(),
+      date_created: this.date_created.toISOString(),
+      end_date: this.end_date.toISOString(),
       start_bid: this.start_bid,
       step: this.step,
       image_path: this.image_path,

@@ -7,13 +7,15 @@ var _ = require('underscore');
 router.get('/', function(req, res, next) {
   couch.all('auction', {}, function(err, data) {
   	var rows = [];
+  	data.rows.sort(function(a, b) {
+  		return new Date(b.doc.date_created).getTime() - new Date(a.doc.date_created).getTime();
+  	});
   	_.each(data.rows, function(auction) {
   		// TODO: if err
   		if (!auction.doc.closed) {
   			rows.push(auction);
   		}
   	});
-  	// !! is essentially a cast to bool. any non empty is true 
     res.render('index', {auctions: rows});
   })
 });
