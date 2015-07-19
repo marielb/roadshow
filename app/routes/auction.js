@@ -22,9 +22,11 @@ router.get('/id/:id', function(req, res, next) {
 router.post('/id/:id', function(req, res, next) {
   // Fetch the record from the DB before updating it
  couch.id('auction', req.params.id, function(err, data) {
-   console.log(req);
+   userModel.login(req.cookies.user_id, req.body.user_email);
+   res.cookie('user_id', userModel._id);
+
    data._rev = req.body.rev;
-   data.current_bidder = req.body.user_id;
+   data.current_bidder = userModel._id;
    data.current_bid = data.current_bid ? parseInt(data.current_bid) + parseInt(data.step) : data.start_bid;
    data.bid_count += 1;
    console.log(data);
