@@ -1,11 +1,10 @@
 {{> partials/_header}}
 
-<div id="js-app-wrapper">
   <div class="row">
     <div class="large-12 columns">
       <form action="/auction" method="POST" enctype="multipart/form-data">
         Take a Photo
-        <input type="file" name="item_photo" required="required" accept="image/*" capture="camera">
+        <input class="js-item-photo-input" type="file" name="item_photo" accept="image/*" capture="camera">
         Item Name
         <input type="text" placeholder="TV Stand" required="required" name="auction_name">
         Starting Bid
@@ -28,11 +27,11 @@
         </div>
         Email
         <input type="email" placeholder="your@email.com" required="required" name="user_email">
-        End date <input type="time" name="end_date" required="required">
+        End date <input type="time" name="end_date">
         <input type="submit" class="button postfix" value="Start Auction">
       </form>
     </div>
   </div>
-</div>
+
 <script data-main="scripts/main" src="/js/create_auction.min.js"></script>
 {{> partials/_footer}}

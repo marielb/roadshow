@@ -8,7 +8,12 @@ var userModel = require('../models/user.js');
 
 /* Open a page to create a new auction */
 router.get('/', function(req, res, next) {
-  res.render('create_auction', {});
+  res.render('create_auction', {
+    auction: {},
+    data: JSON.stringify({
+      auction: {image_name: 'test'}
+    })
+  });
 });
 
 /* Open a page to view an auction */
@@ -16,7 +21,9 @@ router.get('/id/:id', function(req, res, next) {
   couch.id('auction', req.params.id, function(err, data) {
     res.render('auction', {
       auction: data,
-      clientData: JSON.stringify(data)
+      data: JSON.stringify({
+        auction: data
+      })
     });
   });
 });
@@ -53,7 +60,7 @@ router.post('/', function(req, res, next) {
   auctionModel._id = uuid.v4();
   auctionModel.auctioneer_id = userModel._id;
   auctionModel.auction_name = req.body.auction_name;
-  auctionModel.end_date = req.body.end_date;
+  auctionModel.end_time = req.body.end_time;
   auctionModel.start_bid = req.body.start_bid;
   auctionModel.step = req.body.step;
   auctionModel.image_path = req.files.item_photo.name;
