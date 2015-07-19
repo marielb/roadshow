@@ -20,7 +20,7 @@ router.get('/', function(req, res, next) {
 });
 
 /* Open a page to view an auction */
-router.get('/id/:id', function(req, res, next) {
+router.get('/:id', function(req, res, next) {
   couch.id('auction', req.params.id, function(err, data) {
     data.winning = req.cookies.user_id == data.current_bidder
     res.render('auction', {
@@ -33,7 +33,7 @@ router.get('/id/:id', function(req, res, next) {
 });
 
 /* Make a bid */
-router.post('/id/:id', function(req, res, next) {
+router.post('/:id', function(req, res, next) {
   var user_id = req.cookies.user_id;
   auctionModel.validateBid(req.params.id, user_id,
     function(err, data) {
