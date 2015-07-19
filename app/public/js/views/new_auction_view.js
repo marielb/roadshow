@@ -6,21 +6,23 @@
 var View = require('tungstenjs/adaptors/backbone').View;
 var AuctionModel = require('../models/auction_model.js');
 var NewAuctionView = require('../views/new_auction_view.js');
-var _ = require('underscore');
 
 var AppView = View.extend({
-  childViews: {
-    'js-new-auction': NewAuctionView
-  },
   events: {
+  	'change .js-item-photo-input': 'handleImageInput'
   },
 
   postInitialize: function() {
-  	console.log('CreateAuctionView initialized!');
+    console.log('NewAuctionView initialized!');
+    console.log(this.model);
   },
 
+  handleImageInput: function(e) {
+  	this.model.set('image_name', e.target.files[0].name);
+  	console.log(this.model);
+  }
 }, {
-  debugName: 'CreateAuctionView'
+  debugName: 'NewAuctionView'
 });
 
 module.exports = AppView;
