@@ -10,3 +10,4 @@ app/node_modules
 .DS_STORE
 app/npm-debug.log
 app/public/images
+public/js/*.min.js
