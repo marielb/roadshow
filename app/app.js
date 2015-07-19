@@ -9,7 +9,6 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var auction = require('./routes/auction');
 var bid = require('./routes/auction');
-var search = require('./routes/search');
 
 //Load Mustache Template Engine
 var mustachex = require('mustachex');
@@ -35,7 +34,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 app.use('/auction', auction);
-app.use('/search', search);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
