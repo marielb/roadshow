@@ -1,17 +1,24 @@
 var express = require('express');
 var router = express.Router();
+<<<<<<< HEAD
+//var auctionModel = require('../models/auction.js');
+=======
 var fs = require('fs');
+>>>>>>> resizable images
 var couch = require('../couch.js');
 var userModel = require('../models/user.js');
+<<<<<<< HEAD
 var auctionModel = require('../models/auction.js');
 var multer = require('multer');
-var schedule = require('node-schedule');
 var path = require('path');
-var uuid = require('node-uuid');
 
 multerConfig = multer({
     dest: path.join(__dirname, '../', '/public/images')
 });
+=======
+var schedule = require('node-schedule');
+var path = require('path');
+>>>>>>> resizable images
 
 /* Open a page to create a new auction */
 router.get('/', function(req, res, next) {
@@ -117,15 +124,5 @@ router.post('/', multerConfig, function(req, res, next) {
 function closeAuction() {
 
 }
-
-// helper date function
-// it expects time in 24 hour format "HH:MM"
-function calculateEndDate(endTimeString) {
-  var hour = parseInt(endTimeString.slice(0,2));
-  var minute = parseInt(endTimeString.slice(3,5));
-  var x = new Date();
-  return new Date(x.getFullYear(), x.getMonth(), (((x.getHours()<=hour&&x.getMinutes()<minute)||x.getHours()<hour)?x.getDate():x.getDate()+1), hour, minute);
-}
-
 
 module.exports = router;
