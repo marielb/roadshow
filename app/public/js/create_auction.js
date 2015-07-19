@@ -1,6 +1,6 @@
-var AppView = require('./views/auction_view');
+var AppView = require('./views/create_auction_view');
 var AppModel = require('./models/auction_model');
-var template = require('../templates/create_auction.mustache');
+var template = require('../../templates/create_auction.mustache');
 
 module.exports = new AppView({
   el: '#js-app-wrapper',
