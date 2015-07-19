@@ -2,6 +2,12 @@
 
 <div class="row">
   <div class="medium-4 medium-centered margin-top small-12 columns">
+  	{{#message}}
+	<div data-alert class="alert-box warning radius">
+	  	{{ message.text }}
+	  	<a href="#" class="close">&times;</a>
+	</div>
+	{{/message}}
     <h4>A login link will be sent to your email.</h4>
 	  <form method="GET" action="/users/login">
 		  <input type="email" name="email" required="required">

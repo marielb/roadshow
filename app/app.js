@@ -58,7 +58,7 @@ app.get('/email', function(req, res, next) {
       return;
     }
   });
-  res.redirect('/');
+  res.render('login', { message: { text: "A login link has been sent to your email." }});
 });
 
 // catch 404 and forward to error handler
