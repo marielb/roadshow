@@ -23,17 +23,11 @@
 	        </div>
 	      </div>
 	      <div class="medium-4 small-12 columns">
-        	<a class="button expand" data-reveal-id="confirm-bid"/>Bid</a>
+          {{> partials/_bid_form}}
 	      </div>
 	    </div>
 	  </div>
 	</div>
 </div>
-<div id="confirm-bid" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
-	<h4>Confirm Bid</h4>
-	{{> partials/_bid_form}}
-	<a class="close-reveal-modal" aria-label="Close">&#215;</a>
-</div>
 {{/auction}}
-
 {{> partials/_footer}}

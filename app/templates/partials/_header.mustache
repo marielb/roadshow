@@ -15,6 +15,13 @@
         <!-- endbuild -->
         <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Montserrat:700' rel='stylesheet' type='text/css'>
+
+        <script>
+          {{#clientData}}
+            data = {{{clientData}}};
+          {{/clientData}}
+        </script>
+
     </head>
     <body>
       <!--[if lt IE 10]>
@@ -22,22 +29,24 @@
       <![endif]-->
       <div class="row margin-top margin-bottom">
         <div class="large-12 columns">
-          <div class="row collapse">
-            <div class="medium-12 small-4 fr text-right columns margin-bottom-sm">
-              <div><a href="/users">My Account</a></div>
+          <form action="/search" method="GET">
+            <div class="row collapse">
+              <div class="medium-12 small-4 fr text-right columns margin-bottom-sm">
+                <div><a href="/users">My Account</a></div>
+              </div>
+              <div class="medium-3 small-12 columns">
+                <h3><a href="/">Roadshow/</a></h3>
+              </div>
+                <div class="medium-5 small-12 columns">
+                  <input name="search_term" type="text" placeholder="e.g. wool socks, phone charger, juicer">
+                </div>
+                <div class="medium-2 small-12 columns">
+                  <input type="submit" class="button alert postfix" value="Search" />
+                </div>
+              <div class="medium-2 small-12 columns">
+                <a href="/auction" class="button success postfix">+Auction</a>
+              </div>
             </div>
-            <div class="medium-3 small-8 columns">
-              <h3><a href="/">Roadshow/</a></h3>
-            </div>
-            <div class="medium-5 small-12 columns">
-              <input type="text" class="margin-none" placeholder="e.g. wool socks, phone charger, juicer">
-            </div>
-            <div class="medium-2 small-12 columns">
-              <a href="#" class="button alert postfix margin-none">Search</a>
-            </div>
-            <div class="medium-2 small-12 columns">
-              <a href="/auction" class="button success postfix margin-none">+Auction</a>
-            </div>
-          </div>
+          </form>
         </div>
       </div>
