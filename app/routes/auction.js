@@ -4,6 +4,7 @@ var router = express.Router();
 var couch = require('../couch.js');
 var userModel = require('../models/user.js');
 var auctionModel = require('../models/auction.js');
+var schedule = require('node-schedule');
 
 /* Open a page to create a new auction */
 router.get('/', function(req, res, next) {
