@@ -20,6 +20,9 @@ var AuctionModel = Model.extend({
 
     var diffSeconds = Math.round((endDate - now)/1000);
 
+    if (diffSeconds < 0) {
+      return '00:00:00';
+    }
     return padZero(Math.round(diffSeconds/3600)) + ":" + padZero(Math.round((diffSeconds%3600) / 60)) + ":" + padZero(diffSeconds % 60);
   },
 });
