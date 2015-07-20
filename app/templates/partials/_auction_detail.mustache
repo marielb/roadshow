@@ -1,12 +1,10 @@
 <div class="row js-auction-details">
 	<div data-alert class="alert-box warning radius">
-	  	This auction ends at {{formatted_end_date}}
-	  	<a href="#" class="close">&times;</a>
+	  	This auction ends in {{remaining_time}}
 	</div>
     {{#winning}}
   	<div data-alert class="alert-box success radius">
       You are currently winning this auction!
-		  <a href="#" class="close">&times;</a>
 		</div>
     {{/winning}}
   	<div class="medium-6 columns">

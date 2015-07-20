@@ -27,9 +27,13 @@ var AppView = View.extend({
       }
     });
   },
-
   postInitialize: function() {
-  	console.log('Auction Detail View initialized');
+    this.initializeTick();
+  },
+    // calls a method on the model 'tick' which updates the model triggering a change event and re-render of the component
+  initializeTick: function() {
+    // since this is in a set interval we must use bind to be in context of this view
+    setInterval(_.bind(this.model.tick, this.model), 1000);
   },
 
 }, {
