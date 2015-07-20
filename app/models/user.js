@@ -11,26 +11,19 @@ var userModel = {
     if (!user_id) {
       couch.all('user_account', {}, function(err, data) {
         // TODO: if err
-        var found_email = false;
-        for (var i = 0; i < data.rows.length; i++) {
-          console.log(data.rows[i].doc.email);
-          if (data.rows[i].doc.email == user_email) {
+        _.each(data.rows, function(user) {
+          if (user.email == user_email) {
             // we already have a user for this
-            found_email = true;
-            callback(false);
-            break;
+            callback();
           }
-        }
-        if (!found_email) {
-          self._id = uuid.v4();
-          self.email = user_email;
-          self.save();
-        }
+        });
+        self._id = uuid.v4();
+        self.email = user_email;
+        self.save();
       });
     } else {
       this._id = user_id;
     }
-    //callback(true);
   },
   recordBid: function(auction_id) {
     var self = this;
