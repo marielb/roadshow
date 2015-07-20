@@ -9,6 +9,7 @@ var auctionModel = {
     this._id = uuid.v4();
     this.auctioneer_id = prop.auctioneer_id;
     this.auction_name = prop.auction_name;
+    this.date_created = new Date();
     this.end_date = this.calculateEndDate(prop.end_date);
     this.start_bid = prop.start_bid;
     this.step = prop.step;
@@ -21,7 +22,8 @@ var auctionModel = {
       _id: this._id,
       auctioneer_id: this.auctioneer_id,
       auction_name: this.auction_name,
-      end_date: this.end_date.toString(),
+      date_created: this.date_created.toISOString(),
+      end_date: this.end_date.toISOString(),
       start_bid: this.start_bid,
       step: this.step,
       image_path: this.image_path,
@@ -47,7 +49,7 @@ var auctionModel = {
       } else if (user_id === data.auctioneer_id) {
         callback('You are not allowed to participate in your own auction!', data);
       } else if (new Date() > new Date(data.end_date)) {
-        callback('This auction has been closed!', data);
+        callback('This auction has ended!', data);
       } else {
         callback(null, data);
       }
@@ -57,9 +59,9 @@ var auctionModel = {
   saveBid: function(auction_data, revision, user_id, callback) {
     auction_data._rev = revision;
     auction_data.current_bidder = user_id;
-    auction_data.current_bid = 
-      auction_data.current_bid ? 
-        parseInt(auction_data.current_bid) + parseInt(auction_data.step) : 
+    auction_data.current_bid =
+      auction_data.current_bid ?
+        parseInt(auction_data.current_bid) + parseInt(auction_data.step) :
         auction_data.start_bid;
     auction_data.bid_count += 1;
     couch.save('auction', auction_data, function(err, doc) {

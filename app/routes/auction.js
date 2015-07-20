@@ -28,6 +28,7 @@ router.get('/:id', function(req, res, next) {
   couch.id('auction', req.params.id, function(err, data) {
     data.winning = req.cookies.user_id == data.current_bidder;
     data.formatted_end_date = auctionModel.formatDate(data.end_date);
+    data.ended = new Date () < new Date(data.end_date);
     res.render('auction', {
       auction: data,
       data: JSON.stringify({
@@ -38,28 +39,29 @@ router.get('/:id', function(req, res, next) {
 });
 
 /* Make a bid */
-router.post('/:id', function(req, res, next) {
+router.put('/:id', function(req, res, next) {
   var user_id = req.cookies.user_id;
   auctionModel.validateBid(req.params.id, user_id,
     function(err, data) {
       if (err) {
         if (err.stack) {
-          res.render('error', {message: err.message, error: err.stack});
+          res.json({message: err.message, error: err.stack});
         } else {
-          res.render('error', {message: err});
+          // Did not pass validation
+          res.status(409).json(err);
         }
       } else {
-        userModel.login(user_id, req.body.user_email);
+        userModel.login(user_id, '597ba6ee-768c-427d-ba81-bda5e0e2193a');
         res.cookie('user_id', userModel._id);
-        auctionModel.saveBid(data, req.body.rev, userModel._id,
+        auctionModel.saveBid(data, req.body._rev, userModel._id,
           function(err, data) {
             console.log(err);
             if (err) {
-              console.log(err.stack)
-              res.render('error', {message: err});
+              res.json(err);
             } else {
+              userModel.recordBid(data._id);
               data.winning = true;
-              res.render('auction', {auction: data});
+              res.json(data);
             }
           }
         );
@@ -69,8 +71,8 @@ router.post('/:id', function(req, res, next) {
 });
 
 /* Create new auction */
-router.post('/', multerConfig, function(req, res, next) {
-  userModel.login(req.cookies.user_id, req.body.user_email);
+router.post('/', function(req, res, next) {
+  userModel.login(req.cookies.user_id);
   res.cookie('user_id', userModel._id);
 
   var auctionData = req.body;
@@ -123,6 +125,7 @@ router.post('/', multerConfig, function(req, res, next) {
         }
       });
     }.bind(null, model_id));
+    req.app.fuzzy_auctions.add(auctionModel.auction_name);
     res.redirect('/');
   });
 });

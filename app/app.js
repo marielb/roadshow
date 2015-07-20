@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var fs = require('fs');
+var _ = require('underscore');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -15,11 +16,30 @@ var email = require('./routes/email');
 
 //Load Mustache Template Engine
 var mustachex = require('mustachex');
+var multer = require('multer');
 var mailer = require('express-mailer');
 var app = express();
+var bodyParser = require('body-parser');
+
+// Build search structure
+var couch = require('./couch.js');
+var fozzy = require('fuzzyset.js');
+var fuzzy_auctions = FuzzySet();
+couch.all('auction', {}, function(err, data) {
+  // TODO: if err
+  _.each(data.rows, function(auction) {
+    fuzzy_auctions.add(auction.doc.auction_name);
+  });
+});
+app.fuzzy_auctions = fuzzy_auctions;
+
 
 //Set Global App Settings
 app.engine('mustache', mustachex.express);
+
+app.use(multer({
+    dest: __dirname + '/public/images'
+}));
 
 app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'mustache');
@@ -29,6 +49,12 @@ app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(cookieParser('partypoopah'));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.json());
+
+app.use(function(req, res, next) {
+    res.locals.logged_in = !!req.cookies.user_id;
+    next();
+});
 
 app.use('/', routes);
 app.use('/users', users);

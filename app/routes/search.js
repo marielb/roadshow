@@ -8,15 +8,15 @@ var uuid = require('node-uuid');
 
 /* Open a page to create a new search */
 router.get('/', function(req, res, next) {
+  var matched_auctions = req.app.fuzzy_auctions.get(req.query.search_term);
   couch.all('auction', {}, function(err, data) {
-    var auctions = [];
-    _.each(data.rows, function(auction) {
-      var regexp = new RegExp('^.*' + req.query.search_term.toLowerCase() + '.*$');
-      if (auction.doc.auction_name.toLowerCase().match(regexp)) {
-        auctions.push(auction);
-      }
+    // TODO: if err
+    var auctions_to_render = _.filter(data.rows, function(auction) {
+      return _.find(matched_auctions, function(ma) {
+        return auction.doc.auction_name == ma[1];
+      });
     });
-    res.render('search', {auctions: auctions, search_term: req.query.search_term});
+    res.render('search', {auctions: auctions_to_render, search_term: req.query.search_term});
   })
 });
 

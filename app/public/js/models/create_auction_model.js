@@ -11,7 +11,6 @@ var AuctionModel = require('../models/auction_model.js');
 var AppModel = Model.extend({
   relations: {
     auction: AuctionModel
-  }
-
+  },
 });
 module.exports = AppModel;

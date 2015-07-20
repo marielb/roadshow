@@ -6,14 +6,12 @@ var app = require('../app.js');
 /* Display account page or login. */
 router.get('/', function(req, res, next) {
   var userID = req.cookies.user_id;
-  console.log(userID);
   if (!userID) {
   	res.render('login', {})
   } else {
 	  couch.all('auction', {}, function(err, data) {
 	  	var auctions = [];
 	  	for (var i in data.rows) {
-	  		console.log(data.rows[i].doc);
 	  		if (data.rows[i].doc.auctioneer_id === userID) {
 	  			auctions.push(data.rows[i]);
 	  		}

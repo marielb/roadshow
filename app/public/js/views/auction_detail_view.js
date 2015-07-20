@@ -13,9 +13,6 @@ var AppView = View.extend({
   },
 
   handleMakeBid: function(e) {
-    console.log('Bid Made')
-    console.log(this.model);
-    debugger;
     e.preventDefault();
     this.model.save({}, {
       wait: true,
@@ -23,14 +20,17 @@ var AppView = View.extend({
         console.log(response);
       },
       error: function(model, response) {
-        console.log('Error has occurred');
-        console.log(response);
+        model.set('error_message', response.responseText);
       }
     });
   },
-
   postInitialize: function() {
-  	console.log('Auction Detail View initialized');
+    this.initializeTick();
+  },
+    // calls a method on the model 'tick' which updates the model triggering a change event and re-render of the component
+  initializeTick: function() {
+    // since this is in a set interval we must use bind to be in context of this view
+    setInterval(_.bind(this.model.tick, this.model), 1000);
   },
 
 }, {

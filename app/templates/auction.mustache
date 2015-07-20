@@ -5,40 +5,9 @@
 {{/error_message}}
 
 {{#auction}}
-<div class="row">
-	<div data-alert class="alert-box warning radius">
-	  	This auction ends at {{formatted_end_date}}
-	  	<a href="#" class="close">&times;</a>
-	</div>
-    {{#winning}}
-  	<div data-alert class="alert-box success radius">
-      You are currently winning this auction!
-		  <a href="#" class="close">&times;</a>
-		</div>
-    {{/winning}}
-  	<div class="medium-6 columns">
-	  <img src="/images/{{image_path}}">
-	</div>
-  	<div class="medium-6 columns">
-		<div class="panel">
-	    <div class="row collapse">
-	      <div class="medium-8 small-12 columns">
-	        <div class="row">
-	          <div class="medium-12 small-6 columns">
-	            <h5>{{auction_name}}</h5>
-	          </div>
-	          <div class="medium-12 small-6 columns">
-              ${{^bid_count}}{{start_bid}}{{/bid_count}}{{current_bid}} (+${{step}})
-	          </div>
-	        </div>
-	      </div>
-	      <div class="medium-4 small-12 columns">
-          {{> partials/_bid_form}}
-	      </div>
-	    </div>
-	  </div>
-	</div>
-</div>
+  <div id="js-auction-details">
+  {{> partials/_auction_detail}}
+  </div>
 {{/auction}}
 <script data-main="scripts/main" src="/js/auction_detail.min.js"></script>
 {{> partials/_footer}}

@@ -1,0 +1,49 @@
+<div class="row js-auction-details">
+     {{^ended}}
+     <div data-alert class="alert-box warning radius">
+       This auction ends in {{remaining_time}}
+     </div>
+    {{/ended}}
+    {{#ended}}
+     <div data-alert class="alert-box radius">
+       This auction has ended
+     </div>
+    {{/ended}}
+    {{#error_message}}
+  	<div data-alert class="alert-box alert radius">
+      {{error_message}}
+		</div>
+    {{/error_message}}
+    {{#winning}}
+  	<div data-alert class="alert-box success radius">
+      You are currently winning this auction!
+		</div>
+    {{/winning}}
+  	<div class="medium-6 columns">
+	  <img src="/images/{{image_path}}">
+	</div>
+  	<div class="medium-6 columns">
+		<div class="panel">
+	    <div class="row collapse">
+	      <div class="medium-8 small-12 columns">
+	        <div class="row">
+	          <div class="medium-12 small-6 columns">
+	            <h5>{{auction_name}}</h5>
+	          </div>
+	          <div class="medium-12 small-6 columns">
+              ${{^bid_count}}{{start_bid}}{{/bid_count}}{{current_bid}} {{^ended}} (+${{step}}) {{/ended}}
+	          </div>
+	        </div>
+	      </div>
+        {{^ended}}
+	      <div class="medium-4 small-12 columns">
+          <form method="POST" action="/auction/{{_id}}" enctype="multipart/form-data">
+          <input type="hidden" name="rev" value="{{_rev}}" />
+          <input class="button expand js-make-bid" type="submit" value="Bid" />
+        </form>
+        {{/ended}}
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</div>
