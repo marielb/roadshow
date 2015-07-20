@@ -7,22 +7,26 @@ var userModel = {
   email: '',
 
   login: function(user_id, user_email, callback) {
+    this._id = user_id;
     var self = this;
     if (!user_id) {
       couch.all('user_account', {}, function(err, data) {
         // TODO: if err
-        _.each(data.rows, function(user) {
-          if (user.email == user_email) {
-            // we already have a user for this
-            callback();
-          }
+        var user_exists = _.find(data.rows, function(user) {
+          return user.doc.email == user_email;
         });
-        self._id = uuid.v4();
-        self.email = user_email;
-        self.save();
+        if (!user_exists) {
+          self._id = uuid.v4();
+          self.email = user_email;
+          self.save();
+          callback(true);
+        } else {
+          console.log('user does not exist');
+          callback(false);
+        }
       });
     } else {
-      this._id = user_id;
+      callback(true);
     }
   },
   recordBid: function(auction_id) {
