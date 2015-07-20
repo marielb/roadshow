@@ -26,6 +26,5 @@ var AuctionModel = Model.extend({
 
 function padZero(x) {
   return x == 0 ? "00" : (x < 10) ? "0" + x : x;
-
 }
 module.exports = AuctionModel;
