@@ -41,9 +41,7 @@ router.get('/:id', function(req, res, next) {
 
 /* Make a bid */
 router.put('/:id', function(req, res, next) {
-  var user_id = req.cookies.user_id;
-  var user_email = req.body.user_email;
-  userModel.login(user_id, req.body.user_email, function(logged_in) {
+  userModel.login(req.cookies.user_id, req.body.user_email, function(logged_in) {
     if (logged_in) {
       auctionModel.validateBid(req.params.id, userModel._id, function(err, data) {
         if (err) {
