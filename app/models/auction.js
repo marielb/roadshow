@@ -64,6 +64,8 @@ var auctionModel = {
         parseInt(auction_data.current_bid) + parseInt(auction_data.step) :
         auction_data.start_bid;
     auction_data.bid_count += 1;
+    // TODO: remove this property from ever being set in the auction model, it should be in app level model for auction details (once extant)
+    auction_data.winning = undefined;
     couch.save('auction', auction_data, function(err, doc) {
       if (err) {
         console.log('WAAHHH');
