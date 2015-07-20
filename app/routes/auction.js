@@ -26,7 +26,7 @@ router.get('/', function(req, res, next) {
 /* Open a page to view an auction */
 router.get('/:id', function(req, res, next) {
   couch.id('auction', req.params.id, function(err, data) {
-    data.winning = req.cookies.user_id == data.current_bidder;
+    data.winning = req.cookies.user_id && (req.cookies.user_id == data.current_bidder);
     data.formatted_end_date = auctionModel.formatDate(data.end_date);
     data.ended = new Date () > new Date(data.end_date);
     res.render('auction', {
@@ -97,7 +97,7 @@ router.post('/', function(req, res, next) {
 
               // send emails
               req.app.mailer.send('winner_email', {
-                to: winner_email,  
+                to: winner_email,
                 subject: '[Roadshow] You won!',
                 auctioneer_email: auctioneer_email,
                 item_name: auctionData.auction_name,
@@ -133,7 +133,7 @@ router.post('/', function(req, res, next) {
 });
 
 function serializeJson(json) {
-  return '?' + 
+  return '?' +
     Object.keys(json).map(function(key) {
         return encodeURIComponent(key) + '=' +
             encodeURIComponent(json[key]);
