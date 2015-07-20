@@ -86,6 +86,7 @@ router.post('/', function(req, res, next) {
         });
       });
     }.bind(null, data._id));
+    req.app.fuzzy_auctions.add(auctionModel.auction_name);
     res.redirect('/');
   });
 });
