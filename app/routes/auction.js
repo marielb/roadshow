@@ -95,7 +95,7 @@ router.post('/', function(req, res, next) {
 
               // send emails
               req.app.mailer.send('winner_email', {
-                to: winner_email,  
+                to: winner_email,
                 subject: '[Roadshow] You won!',
                 auctioneer_email: auctioneer_email,
                 item_name: auctionData.auction_name,
@@ -131,7 +131,7 @@ router.post('/', function(req, res, next) {
 });
 
 function serializeJson(json) {
-  return '?' + 
+  return '?' +
     Object.keys(json).map(function(key) {
         return encodeURIComponent(key) + '=' +
             encodeURIComponent(json[key]);
