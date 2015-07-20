@@ -75,63 +75,64 @@ router.put('/:id', function(req, res, next) {
 
 /* Create new auction */
 router.post('/', function(req, res, next) {
-  userModel.login(req.cookies.user_id, req.body.user_email, function() {
-    res.redirect('/users');
-  });
-  res.cookie('user_id', userModel._id);
+  userModel.login(req.cookies.user_id, req.body.user_email, function(success) {
+    if (!success) {
+      res.redirect('/users');
+    } else {
+      var auctionData = req.body;
+      auctionData.auctioneer_id = userModel._id;
+      auctionData.image_path = req.files.item_photo.name;
+      auctionModel.create(auctionData);
+      auctionModel.save(function(model_id) {
+        // schedule auction closing
+        schedule.scheduleJob(auctionModel.end_date, function(model_id) {
+          console.log(model_id);
+          couch.id('auction', model_id, function(err, data) {
+            var auctionData = data;
+            if (auctionData.current_bidder && auctionData.current_bid) {
+              couch.id('user_account', auctionData.auctioneer_id, function(err, data) {[]
+                var auctioneer_email = data.email;
+                couch.id('user_account', auctionData.current_bidder, function(err, data) {
+                  var winner_email = data.email;
+                  console.log(auctioneer_email);
+                  console.log(winner_email);
 
-  var auctionData = req.body;
-  auctionData.auctioneer_id = userModel._id;
-  auctionData.image_path = req.files.item_photo.name;
-  auctionModel.create(auctionData);
-  auctionModel.save(function(model_id) {
-    // schedule auction closing
-    schedule.scheduleJob(auctionModel.end_date, function(model_id) {
-      console.log(model_id);
-      couch.id('auction', model_id, function(err, data) {
-        var auctionData = data;
-        if (auctionData.current_bidder && auctionData.current_bid) {
-          couch.id('user_account', auctionData.auctioneer_id, function(err, data) {[]
-            var auctioneer_email = data.email;
-            couch.id('user_account', auctionData.current_bidder, function(err, data) {
-              var winner_email = data.email;
-              console.log(auctioneer_email);
-              console.log(winner_email);
+                  // send emails
+                  req.app.mailer.send('winner_email', {
+                    to: winner_email,
+                    subject: '[Roadshow] You won!',
+                    auctioneer_email: auctioneer_email,
+                    item_name: auctionData.auction_name,
+                    bid: auctionData.current_bid
+                  }, function () {});
+                  req.app.mailer.send('auctioneer_email', {
+                    to: auctioneer_email,
+                    subject: '[Roadshow] Your auction has ended!',
+                    winner_email: winner_email,
+                    item_name: auctionData.auction_name,
+                    bid: auctionData.current_bid
+                  }, function () {});
 
-              // send emails
-              req.app.mailer.send('winner_email', {
-                to: winner_email,
-                subject: '[Roadshow] You won!',
-                auctioneer_email: auctioneer_email,
-                item_name: auctionData.auction_name,
-                bid: auctionData.current_bid
-              }, function () {});
-              req.app.mailer.send('auctioneer_email', {
-                to: auctioneer_email,
-                subject: '[Roadshow] Your auction has ended!',
-                winner_email: winner_email,
-                item_name: auctionData.auction_name,
-                bid: auctionData.current_bid
-              }, function () {});
-
-              // close auction
-              auctionData.closed = true;
-              console.log('Triggered!');
-              couch.save('auction', auctionData, function(err) {
-                if (err) {
-                  return false;
-                  console.log('Auction expired but failed to close. We done messed up');
-                } else {
-                  console.log('GREAT SUCCESS!!');
-                }
+                  // close auction
+                  auctionData.closed = true;
+                  console.log('Triggered!');
+                  couch.save('auction', auctionData, function(err) {
+                    if (err) {
+                      return false;
+                      console.log('Auction expired but failed to close. We done messed up');
+                    } else {
+                      console.log('GREAT SUCCESS!!');
+                    }
+                  });
+                });
               });
-            });
+            }
           });
-        }
+        }.bind(null, model_id));
+        req.app.fuzzy_auctions.add(auctionModel.auction_name);
+        res.redirect('/');
       });
-    }.bind(null, model_id));
-    req.app.fuzzy_auctions.add(auctionModel.auction_name);
-    res.redirect('/');
+    }
   });
 });
 
