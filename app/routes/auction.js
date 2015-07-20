@@ -100,9 +100,7 @@ router.put('/:id', function(req, res, next) {
 /* Create new auction */
 router.post('/', function(req, res, next) {
   userModel.login(req.cookies.user_id, req.body.user_email, function(logged_in) {
-    console.log(logged_in);
     if (logged_in) {
-      console.log('why am i here');
       res.cookie('user_id', userModel._id);
       var auctionData = req.body;
       auctionData.auctioneer_id = userModel._id;

@@ -21,7 +21,7 @@ var userModel = {
           self.save();
           callback(true);
         } else {
-          console.log('user does not exist');
+          console.log('logged out user entered existing email');
           callback(false);
         }
       });
