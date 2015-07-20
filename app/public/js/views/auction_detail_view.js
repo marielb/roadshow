@@ -16,9 +16,6 @@ var AppView = View.extend({
     e.preventDefault();
     this.model.save({}, {
       wait: true,
-      success: function(model, response) {
-        console.log(response);
-      },
       error: function(model, response) {
         model.set('error_message', response.responseText);
       }
