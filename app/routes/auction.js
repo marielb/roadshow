@@ -32,7 +32,8 @@ router.get('/:id', function(req, res, next) {
     res.render('auction', {
       auction: data,
       data: JSON.stringify({
-        auction: data
+        auction: data,
+        logged_in: res.locals.logged_in
       })
     });
   });
