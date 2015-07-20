@@ -1,4 +1,5 @@
 <form method="POST" action="/auction/{{_id}}" enctype="multipart/form-data">
   <input type="hidden" name="rev" value="{{_rev}}" />
+  <input type="email" placeholder="your@email.com" required="required" name="user_email">
   <input class="button expand js-make-bid" type="submit" value="Bid" />
 </form>

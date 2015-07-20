@@ -39,11 +39,22 @@
 	      <div class="medium-4 small-12 columns">
           <form method="POST" action="/auction/{{_id}}" enctype="multipart/form-data">
           <input type="hidden" name="rev" value="{{_rev}}" />
-          <input class="button expand js-make-bid" type="submit" value="Bid" />
+          {{^logged_in}}
+            <a class="button expand" data-reveal-id="confirm-bid-{{_id}}">Bid</a>
+          {{/logged_in}}
+          {{#logged_in}}
+            <input class="button expand js-make-bid" type="submit" value="Bid" />
+          {{/logged_in}}
         </form>
         {{/ended}}
 	      </div>
 	    </div>
 	  </div>
 	</div>
+</div>
+
+<div id="confirm-bid-{{_id}}" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+  <h4>Confirm Bid</h4>
+  {{> _bid_form}}
+  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
 </div>

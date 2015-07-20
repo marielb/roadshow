@@ -14,7 +14,7 @@
         </div>
       </div>
       <div class="medium-4 small-12 columns">
-        <a class="button expand" data-reveal-id="confirm-bid-{{_id}}" >Bid</a>
+        <a class="button expand" {{#logged_in}}href="/auction/{{_id}}"{{/logged_in}} {{^logged_in}}data-reveal-id="confirm-bid-{{_id}}"{{/logged_in}}>Bid</a>
       </div>
     </div>
   </div>
