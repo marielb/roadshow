@@ -7,7 +7,7 @@ var app = require('../app.js');
 router.get('/', function(req, res, next) {
   var userID = req.cookies.user_id;
   if (!userID) {
-  	res.render('login', {})
+  	res.render('login', {});
   } else {
 	  couch.all('auction', {}, function(err, data) {
       // TODO: if err

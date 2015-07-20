@@ -74,7 +74,9 @@ router.put('/:id', function(req, res, next) {
 
 /* Create new auction */
 router.post('/', function(req, res, next) {
-  userModel.login(req.cookies.user_id, req.body.user_email);
+  userModel.login(req.cookies.user_id, req.body.user_email, function() {
+    res.redirect('/users');
+  });
   res.cookie('user_id', userModel._id);
 
   var auctionData = req.body;
