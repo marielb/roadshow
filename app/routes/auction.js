@@ -40,7 +40,8 @@ router.put('/:id', function(req, res, next) {
         if (err.stack) {
           res.json({message: err.message, error: err.stack});
         } else {
-          res.json(err);
+          // Did not pass validation
+          res.status(409).json(err);
         }
       } else {
         userModel.login(user_id, '597ba6ee-768c-427d-ba81-bda5e0e2193a');

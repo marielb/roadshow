@@ -13,8 +13,6 @@ var AppView = View.extend({
   },
 
   handleMakeBid: function(e) {
-    console.log('Bid Made')
-    console.log(this.model);
     e.preventDefault();
     this.model.save({}, {
       wait: true,
@@ -22,8 +20,7 @@ var AppView = View.extend({
         console.log(response);
       },
       error: function(model, response) {
-        console.log('Error has occurred');
-        console.log(response);
+        model.set('error_message', response.responseText);
       }
     });
   },

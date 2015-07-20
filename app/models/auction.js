@@ -51,7 +51,7 @@ var auctionModel = {
       } else if (user_id === data.auctioneer_id) {
         callback('You are not allowed to participate in your own auction!', data);
       } else if (new Date() > new Date(data.end_date)) {
-        callback('This auction has been closed!', data);
+        callback('This auction has ended!', data);
       } else {
         callback(null, data);
       }

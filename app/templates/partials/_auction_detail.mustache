@@ -2,6 +2,11 @@
 	<div data-alert class="alert-box warning radius">
 	  	This auction ends in {{remaining_time}}
 	</div>
+    {{#error_message}}
+  	<div data-alert class="alert-box alert radius">
+      {{error_message}}
+		</div>
+    {{/error_message}}
     {{#winning}}
   	<div data-alert class="alert-box success radius">
       You are currently winning this auction!
