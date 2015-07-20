@@ -5,6 +5,11 @@
     <div class="row collapse">
       <div class="medium-8 small-12 columns">
         <div class="row">
+          {{#closed}}
+          <div class="medium-12 columns">
+            <div class="round alert label">Closed</div>
+          </div>
+          {{/closed}}
           <div class="medium-12 small-6 columns">
             <h5><a href="/auction/{{_id}}">{{auction_name}}</a></h5>
           </div>
