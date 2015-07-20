@@ -10,14 +10,28 @@ router.get('/', function(req, res, next) {
   	res.render('login', {})
   } else {
 	  couch.all('auction', {}, function(err, data) {
-	  	var auctions = [];
-	  	for (var i in data.rows) {
-	  		if (data.rows[i].doc.auctioneer_id === userID) {
-	  			auctions.push(data.rows[i]);
-	  		}
-	  	}
-  		res.render('user', {auctions: auctions});
-	  });
+      // TODO: if err
+      couch.id('user_account',  userID, function(err, user) {
+  	  	var hosted_auctions = [];
+        var bidded_auctions = [];
+  	  	for (var i in data.rows) {
+  	  		if (data.rows[i].doc.auctioneer_id === userID) {
+  	  			hosted_auctions.push(data.rows[i]);
+  	  		}
+          if (user.auctions) {
+            if (user.auctions.indexOf(data.rows[i].doc._id) > -1) {
+              if (data.rows[i].doc.current_bidder === userID){
+                data.rows[i].winning = true;
+              } else {
+                data.rows[i].losing = true;
+              }
+              bidded_auctions.push(data.rows[i]);
+            }
+          }
+  	  	}
+    		res.render('user', {hosted_auctions: hosted_auctions, bidded_auctions: bidded_auctions});
+  	  });
+    });
   }
 });
 

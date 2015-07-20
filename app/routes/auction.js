@@ -41,7 +41,11 @@ router.get('/:id', function(req, res, next) {
 /* Make a bid */
 router.put('/:id', function(req, res, next) {
   var user_id = req.cookies.user_id;
-  auctionModel.validateBid(req.params.id, user_id,
+  var user_email = req.body.user_email;
+  userModel.login(user_id, req.body.user_email, function() {
+    res.status(403).json('Forbidden');
+  });
+  auctionModel.validateBid(req.params.id, userModel._id,
     function(err, data) {
       if (err) {
         if (err.stack) {
@@ -51,11 +55,9 @@ router.put('/:id', function(req, res, next) {
           res.status(409).json(err);
         }
       } else {
-        userModel.login(user_id, '597ba6ee-768c-427d-ba81-bda5e0e2193a');
         res.cookie('user_id', userModel._id);
         auctionModel.saveBid(data, req.body._rev, userModel._id,
           function(err, data) {
-            console.log(err);
             if (err) {
               res.json(err);
             } else {
@@ -72,7 +74,7 @@ router.put('/:id', function(req, res, next) {
 
 /* Create new auction */
 router.post('/', function(req, res, next) {
-  userModel.login(req.cookies.user_id);
+  userModel.login(req.cookies.user_id, req.body.user_email);
   res.cookie('user_id', userModel._id);
 
   var auctionData = req.body;

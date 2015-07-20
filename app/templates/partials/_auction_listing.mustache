@@ -3,6 +3,21 @@
   <a href="/auction/{{_id}}"><img src="/images/{{image_path}}"></a>
   <div class="panel">
     <div class="row collapse">
+      {{#losing}}
+      <div class="medium-12 columns centered">
+        <div class="round warning label">Losing :(</div>
+      </div>
+      {{/losing}}
+      {{#winning}}
+      <div class="medium-12 columns centered">
+        <div class="round success label">Winning!</div>
+      </div>
+      {{/winning}}
+      {{#closed}}
+      <div class="medium-12 columns centered">
+        <div class="round alert label">Closed</div>
+      </div>
+      {{/closed}}
       <div class="medium-8 small-12 columns">
         <div class="row">
           <div class="medium-12 small-6 columns">

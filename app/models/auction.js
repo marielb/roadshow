@@ -42,6 +42,7 @@ var auctionModel = {
   },
 
   validateBid: function(auction_id, user_id, callback) {
+    
     // Fetch the record from the DB before updating it
     couch.id('auction', auction_id, function(err, data) {
       if (err) {

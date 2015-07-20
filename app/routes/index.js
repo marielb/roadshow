@@ -12,7 +12,9 @@ router.get('/', function(req, res, next) {
   	});
   	_.each(data.rows, function(auction) {
   		// TODO: if err
-  		if (!auction.doc.closed) {
+
+  		// only add if the end date has not passed
+  		if (new Date().getTime() < new Date(auction.doc.end_date).getTime()) {
   			rows.push(auction);
   		}
   	});
