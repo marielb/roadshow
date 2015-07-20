@@ -65,6 +65,7 @@ exports.all = function(db, options, done) {
 };
 
 exports.id = function(db, id, done) {
+  console.log(url + '/' + db + '/' + id);
   request.get(url + '/' + db + '/' + id,
       {json: true}, function(err, res, body) {
     if (err) return done('Unable to connect to CouchDB');

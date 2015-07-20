@@ -6,6 +6,7 @@ var userModel = require('../models/user.js');
 var auctionModel = require('../models/auction.js');
 var multer = require('multer');
 var path = require('path');
+var schedule = require('node-schedule');
 
 multerConfig = multer({
     dest: path.join(__dirname, '../', '/public/images')
@@ -76,27 +77,62 @@ router.post('/', multerConfig, function(req, res, next) {
   auctionData.auctioneer_id = userModel._id;
   auctionData.image_path = req.files.item_photo.name;
   auctionModel.create(auctionData);
-  auctionModel.save(function() {
-    schedule.scheduleJob(self.end_date, function(model_id) {
+  auctionModel.save(function(model_id) {
+    // schedule auction closing
+    schedule.scheduleJob(auctionModel.end_date, function(model_id) {
+      console.log(model_id);
       couch.id('auction', model_id, function(err, data) {
-        data.closed = true;
-        console.log('Triggered!');
-        couch.save('auction', data, function(err) {
-          if (err) {
-            return false;
-            console.log('Auction expired but failed to close. We done messed up');
-          } else {
-            console.log('GREAT SUCCESS!!');
-          }
-        });
+        var auctionData = data;
+        if (auctionData.current_bidder && auctionData.current_bid) {
+          couch.id('user_account', auctionData.auctioneer_id, function(err, data) {[]
+            var auctioneer_email = data.email;
+            couch.id('user_account', auctionData.current_bidder, function(err, data) {
+              var winner_email = data.email;
+              console.log(auctioneer_email);
+              console.log(winner_email);
+
+              // send emails
+              req.app.mailer.send('winner_email', {
+                to: winner_email,  
+                subject: '[Roadshow] You won!',
+                auctioneer_email: auctioneer_email,
+                item_name: auctionData.auction_name,
+                bid: auctionData.current_bid
+              }, function () {});
+              req.app.mailer.send('auctioneer_email', {
+                to: auctioneer_email,
+                subject: '[Roadshow] Your auction has ended!',
+                winner_email: winner_email,
+                item_name: auctionData.auction_name,
+                bid: auctionData.current_bid
+              }, function () {});
+
+              // close auction
+              auctionData.closed = true;
+              console.log('Triggered!');
+              couch.save('auction', auctionData, function(err) {
+                if (err) {
+                  return false;
+                  console.log('Auction expired but failed to close. We done messed up');
+                } else {
+                  console.log('GREAT SUCCESS!!');
+                }
+              });
+            });
+          });
+        }
       });
-    }.bind(null, data._id));
+    }.bind(null, model_id));
     res.redirect('/');
   });
 });
 
-function closeAuction() {
-
+function serializeJson(json) {
+  return '?' + 
+    Object.keys(json).map(function(key) {
+        return encodeURIComponent(key) + '=' +
+            encodeURIComponent(json[key]);
+    }).join('&');
 }
 
 module.exports = router;

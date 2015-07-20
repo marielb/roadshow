@@ -2,7 +2,6 @@ var couch = require('../couch.js');
 var userModel = require('../models/user.js');
 var uuid = require('node-uuid');
 var fs = require('fs');
-var schedule = require('node-schedule');
 
 var auctionModel = {
 
@@ -31,12 +30,11 @@ var auctionModel = {
   },
 
   save: function(callback) {
-    var self = this;
     couch.save('auction', this.toJSON(), function(err, data) {
       if (err) {
         return false
       }
-      callback();
+      callback(data._id);
       return true;
     });
   },
