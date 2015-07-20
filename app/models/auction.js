@@ -61,9 +61,9 @@ var auctionModel = {
   saveBid: function(auction_data, revision, user_id, callback) {
     auction_data._rev = revision;
     auction_data.current_bidder = user_id;
-    auction_data.current_bid = 
-      auction_data.current_bid ? 
-        parseInt(auction_data.current_bid) + parseInt(auction_data.step) : 
+    auction_data.current_bid =
+      auction_data.current_bid ?
+        parseInt(auction_data.current_bid) + parseInt(auction_data.step) :
         auction_data.start_bid;
     auction_data.bid_count += 1;
     couch.save('auction', auction_data, function(err, doc) {

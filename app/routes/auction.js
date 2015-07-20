@@ -22,6 +22,7 @@ router.get('/:id', function(req, res, next) {
   couch.id('auction', req.params.id, function(err, data) {
     data.winning = req.cookies.user_id == data.current_bidder;
     data.formatted_end_date = auctionModel.formatDate(data.end_date);
+    data.ended = new Date () < new Date(data.end_date);
     res.render('auction', {
       auction: data,
       data: JSON.stringify({
