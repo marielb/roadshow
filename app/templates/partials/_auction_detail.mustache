@@ -35,10 +35,9 @@
 	          </div>
 	        </div>
 	      </div>
-        {{^ended}}
 	      <div class="medium-4 small-12 columns">
-          <form method="POST" action="/auction/{{_id}}" enctype="multipart/form-data">
-          <input type="hidden" name="rev" value="{{_rev}}" />
+        {{^ended}}
+          <form>
           {{^logged_in}}
             <a class="button expand" data-reveal-id="confirm-bid-{{_id}}">Bid</a>
           {{/logged_in}}
@@ -55,6 +54,12 @@
 
 <div id="confirm-bid-{{_id}}" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
   <h4>Confirm Bid</h4>
-  {{> _bid_form}}
-  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+  <form method="POST" action="/auction/{{_id}}" enctype="application/json">
+  <input type="hidden" name="rev" value="{{_rev}}" />
+  <input type="email" placeholder="your@email.com" required="required" name="user_email" />
+  <input class="button expand js-make-bid" onclick="var y = {}; var j = _.each($(this).parent().serializeArray(), function(el) {y[el.name] = el.value;});
+  $.ajax({url:'/auction/{{_id}}', method:'PUT', data:j});
+" value="Bid" />
+  </form>
+<a class="close-reveal-modal" aria-label="Close">&#215;</a>
 </div>
