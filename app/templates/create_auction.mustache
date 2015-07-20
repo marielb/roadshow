@@ -32,7 +32,7 @@
             </div>
           </div>
           Email
-          {{#logged_in}}
+          {{^logged_in}}
             <input type="email" placeholder="your@email.com" required="required" name="user_email">
           {{/logged_in}}
           End date <input type="time" name="end_date" required="required">
