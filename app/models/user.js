@@ -1,5 +1,6 @@
 var uuid = require('node-uuid');
 var couch = require('../couch.js');
+var _ = require('underscore');
 
 var userModel = {
   _id: null,
@@ -21,10 +22,21 @@ var userModel = {
       });
     }
   },
+  recordBid: function(auction_id) {
+    var self = this;
+    couch.id('user_account', this._id, function(err, data) {
+      if (err) {
+        console.log('sux bruh');
+      } else {
+        self.auctions = _.union(data.auctions, [auction_id]);
+        self._rev = data._rev;
+        self.save();
+      }
+    });
+  },
   save: function() {
     couch.save('user_account', this, function(err, data) {
-      console.log(err);
-      console.log(data);
+      // TODO: if err
     });
   }
 };

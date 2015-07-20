@@ -53,6 +53,7 @@ router.put('/:id', function(req, res, next) {
             if (err) {
               res.json(err);
             } else {
+              userModel.recordBid(data._id);
               data.winning = true;
               res.json(data);
             }
