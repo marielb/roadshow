@@ -6,20 +6,23 @@ var userModel = {
   _id: null,
   email: '',
 
-  login: function(user_id, email) {
-    this._id = user_id;
-    this.email = email;
-
+  login: function(user_id, user_email, callback) {
+    var self = this;
     if (!user_id) {
-      this._id = uuid.v4();
-      this.save();
-    } else {
-      var self = this;
-      couch.id('user_account', user_id, function(err, data) {
-        if (!data._id) {
-          self.save();
-        }
+      couch.all('user_account', {}, function(err, data) {
+        // TODO: if err
+        _.each(data.rows, function(user) {
+          if (user.email == user_email) {
+            // we already have a user for this
+            callback();
+          }
+        });
+        this._id = uuid.v4();
+        this.email = user_email;
+        this.save();
       });
+    } else {
+      this._id = user_id;
     }
   },
   recordBid: function(auction_id) {
@@ -30,6 +33,7 @@ var userModel = {
       } else {
         self.auctions = _.union(data.auctions, [auction_id]);
         self._rev = data._rev;
+        self.email = data.email;
         self.save();
       }
     });
