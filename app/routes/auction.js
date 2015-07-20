@@ -43,8 +43,34 @@ router.get('/:id', function(req, res, next) {
 router.put('/:id', function(req, res, next) {
   var user_id = req.cookies.user_id;
   var user_email = req.body.user_email;
-  userModel.login(user_id, req.body.user_email, function() {
-    res.status(403).json('Forbidden');
+  userModel.login(user_id, req.body.user_email, function(logged_in) {
+    if (logged_in) {
+      auctionModel.validateBid(req.params.id, userModel._id, function(err, data) {
+        if (err) {
+          if (err.stack) {
+            res.json({message: err.message, error: err.stack});
+          } else {
+            // Did not pass validation
+            res.status(409).json(err);
+          }
+        } else {
+          res.cookie('user_id', userModel._id);
+          auctionModel.saveBid(data, req.body._rev, userModel._id,
+            function(err, data) {
+              if (err) {
+                res.json(err);
+              } else {
+                userModel.recordBid(data._id);
+                data.winning = true;
+                res.json(data);
+              }
+            }
+          );
+        }
+      });
+    } else {
+      res.render('login', { message: { text: "Please log in." }})
+    }
   });
   auctionModel.validateBid(req.params.id, userModel._id,
     function(err, data) {
@@ -133,7 +159,7 @@ router.post('/', function(req, res, next) {
         res.redirect('/');
       });
     } else {
-      res.render('login', { message: { text: "Please log in." }})
+      res.render('login', { message: { text: "Please log in." }});
     }
   });
 });
