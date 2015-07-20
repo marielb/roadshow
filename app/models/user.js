@@ -17,9 +17,9 @@ var userModel = {
             callback();
           }
         });
-        this._id = uuid.v4();
-        this.email = user_email;
-        this.save();
+        self._id = uuid.v4();
+        self.email = user_email;
+        self.save();
       });
     } else {
       this._id = user_id;
