@@ -56,7 +56,7 @@ router.put('/:id', function(req, res, next) {
           auctionModel.saveBid(data, req.body._rev, userModel._id,
             function(err, data) {
               if (err) {
-                res.json(err);
+                res.json({message: err.message, error: err.stack});
               } else {
                 userModel.recordBid(data._id);
                 data.winning = true;
@@ -70,31 +70,6 @@ router.put('/:id', function(req, res, next) {
       res.render('login', { message: { text: "Please log in." }})
     }
   });
-  auctionModel.validateBid(req.params.id, userModel._id,
-    function(err, data) {
-      if (err) {
-        if (err.stack) {
-          res.json({message: err.message, error: err.stack});
-        } else {
-          // Did not pass validation
-          res.status(409).json(err);
-        }
-      } else {
-        res.cookie('user_id', userModel._id);
-        auctionModel.saveBid(data, req.body._rev, userModel._id,
-          function(err, data) {
-            if (err) {
-              res.json(err);
-            } else {
-              userModel.recordBid(data._id);
-              data.winning = true;
-              res.json(data);
-            }
-          }
-        );
-      }
-    }
-  );
 });
 
 /* Create new auction */
